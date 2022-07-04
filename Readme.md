@@ -23,14 +23,16 @@ Use the script like this:
 ./Invoke-Analyzer.ps1 -SettingsPath PSScriptAnalyzerSettings.psd1
 ```
 
+The `-SettingsPath` can be omitted, in this case the _PSScriptAnalyzerSettings.psd1_ in the same directory as the _Invoke-Analyzer.ps1_ will be used.
+
 You can invoke it from a GitHub action file like this:
 ```yaml
     - name: Lint PowerShell scripts
       shell: pwsh
-      run: ${{ github.action_path }}/Invoke-Analyzer.ps1 -SettingsPath PSScriptAnalyzerSettings.psd1 -ForGitHubAction
+      run: ${{ github.action_path }}/Invoke-Analyzer.ps1 -ForGitHubAction
 ```
 
-Note the `-ForGitHubAction` optional switch. When enabled the validation messages become [error type file annotations](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message) pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary and in the pull request's Files tab.
+The `-ForGitHubAction` optional switch replaces the normal `Write-Error` messages with [error workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message). These create file annotations pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary and in the pull request's Files tab.
 
 
 ## Contributing and support

@@ -3,7 +3,7 @@
     "ForGitHubActions",
     Justification = "False positive (see https://github.com/PowerShell/PSScriptAnalyzer/issues/1472).")]
 param(
-    [Parameter(Mandatory = $True)] $SettingsPath,
+    $SettingsPath = (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'PSScriptAnalyzerSettings.psd1'),
     [Switch] $ForGitHubActions
 )
 
