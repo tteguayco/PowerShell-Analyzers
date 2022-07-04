@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+    <IsPublishable>false</IsPublishable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Lombiq PowerShell MSBuild Targets</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2022, Lombiq Technologies Ltd.</Copyright>
+    <Description>Lombiq PowerShell MSBuild Targets: Provides automatic Powershell script linting before building a .NET project. See the project website for detailed documentation.</Description>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
+    <PackageTags>Lombiq;Powershell;MSBuild</PackageTags>
+    <RepositoryUrl>https://github.com/Lombiq/PowerShell-Analyzers</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/PowerShell-Analyzers</PackageProjectUrl>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="License.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+    <None Include="Lombiq.Analyzers.PowerShell.targets" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.targets" />
+  </ItemGroup>
+
+</Project>

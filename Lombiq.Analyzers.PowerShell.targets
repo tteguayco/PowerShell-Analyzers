@@ -1,0 +1,43 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- It's enabled by default. Copy this into your csproj file if you want to disable stamp creation.
+    <CreatePowerShellAnalyzersStampFile>false</CreatePowerShellAnalyzersStampFile> -->
+    <PowerShellAnalyzersStampFile>.ps1-analyzer-stamp</PowerShellAnalyzersStampFile>
+
+    <PowerShellAnalyzersOutputType Condition="'$(GITHUB_ENV)' != ''">-ForGitHubAction</PowerShellAnalyzersOutputType>
+    <PowerShellAnalyzersOutputType Condition="'$(GITHUB_ENV)' == ''">-ForMsBuild</PowerShellAnalyzersOutputType>
+
+    <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND Exists($(SolutionDir))"
+      >$(SolutionDir)</PowerShellAnalyzersRootDirectory>
+    <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND !Exists($(SolutionDir))"
+      >$(ProjectDir)</PowerShellAnalyzersRootDirectory>
+  </PropertyGroup>
+
+  <Target
+    Name="PowerShellValidation"
+    AfterTargets="AfterResolveReferences"
+    BeforeTargets="Compile"
+    Inputs="**\*.ps1"
+    Outputs="$(PowerShellAnalyzersStampFile)">
+
+    <Warning Text="Executing Invoke-Analyzer in $(PowerShellAnalyzersRootDirectory)..." />
+
+    <!-- Check if PowerShell 7+ (also known as Powershell Core or pwsh) is installed. -->
+    <Exec Command="pwsh -v" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="PowerShellCoreExitCode"/>
+    </Exec>
+    <!-- Use PowerShell 7+ if installed. -->
+    <Exec Condition="'$(PowerShellCoreExitCode)' == '0'"
+          Command="pwsh $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersOutputType)"
+          WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
+    <!-- Otherwise use Windows PowerShell. -->
+    <Exec Condition="'$(PowerShellCoreExitCode)' != '0'"
+          Command="powershell $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersOutputType)"
+          WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
+    <Touch Condition="'$(CreatePowerShellAnalyzersStampFile)' != 'false'"
+           Files="$(PowerShellAnalyzersStampFile)"
+           AlwaysCreate="true" />
+  </Target>
+
+</Project>

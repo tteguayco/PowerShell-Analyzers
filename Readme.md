@@ -25,7 +25,9 @@ Use the script like this:
 
 The `-SettingsPath` can be omitted, in this case the _PSScriptAnalyzerSettings.psd1_ in the same directory as the _Invoke-Analyzer.ps1_ will be used.
 
-You can invoke it from a GitHub action file like this:
+#### GitHub Actions
+
+You can invoke it from an _action.yml_ file like this:
 ```yaml
     - name: Lint PowerShell scripts
       shell: pwsh
@@ -34,6 +36,17 @@ You can invoke it from a GitHub action file like this:
 
 The `-ForGitHubAction` optional switch replaces the normal `Write-Error` messages with [error workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message). These create file annotations pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary and in the pull request's Files tab.
 
+#### MSBuild
+
+The _csproj_ file automatically executes it before building a .NET project. You can use the `<PowerShellAnalyzersRootDirectory>` property in your project's `<PropertyGroup>` to set its scope. If not specified, it uses the solution directory if present (if you are building the whole solution), otherwise the package directory (if you are building just the project).
+
+If this project is included via a submodule, edit the _csproj_ file of your primary project(s) and add the following:
+
+```xml
+<Import Project="path\to\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.targets" />
+```
+
+If this project is included as a NuGet package, you have nothing further to do.
 
 ## Contributing and support
 
