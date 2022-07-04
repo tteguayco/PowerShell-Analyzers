@@ -1,17 +1,36 @@
-# Lombiq <add project name here>
+# Lombiq PowerShell Analyzers
 
 
 
 ## About
 
-Add a general overview of the project here. Keep or remove the OSOCE note below as necessary.
+Powershell static code analysis via [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) and [our configuration for it](PSScriptAnalyzerSettings.psd1).
 
 Do you want to quickly try out this project and see it in action? Check it out in our [Open-Source Orchard Core Extensions](https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions) full Orchard Core solution and also see our other useful Orchard Core-related open-source projects!
 
 
 ## Documentation
 
-Add detailed documentation here. If it's a lot of content then create documentation pages under the *Docs* folder and link pages here.
+### Pre-requisites
+
+The PSScriptAnalyzer module must be installed. Follow the steps [here](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer). Note that if you are usnig this in GitHub Actions, the common images (`windows-latest` and `ubuntu-latest`) already have it so you don't need to do anything.
+
+### Usage
+
+Use the script like this:
+
+```pwsh
+./Invoke-Analyzer.ps1 -SettingsPath PSScriptAnalyzerSettings.psd1
+```
+
+You can invoke it from a GitHub action file like this:
+```yaml
+    - name: Lint PowerShell scripts
+      shell: pwsh
+      run: ${{ github.action_path }}/Invoke-Analyzer.ps1 -SettingsPath PSScriptAnalyzerSettings.psd1 -ForGitHubAction
+```
+
+Note the `-ForGitHubAction` optional switch. When enabled the validation messages become [error type file annotations](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message) pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary and in the pull request's Files tab.
 
 
 ## Contributing and support
