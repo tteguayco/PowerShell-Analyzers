@@ -87,6 +87,8 @@ foreach ($result in $results)
     Write-FileError -Path $result.ScriptPath -Line $result.Line -Column $result.Column $message
 }
 
+Write-Output "Do we even reach this point?"
+
 # Printing out all the errors at once on GH, becuase otherwise it will stop after the first one in Linux.
 Write-Output $outputCache.ToString()
 exit $results.Count
