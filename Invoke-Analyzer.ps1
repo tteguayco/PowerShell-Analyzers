@@ -76,20 +76,13 @@ else
     exit -1
 }
 
-Write-Output (Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules | % { $_.FullName })
-
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
     % { Invoke-ScriptAnalyzer $_ -Settings $SettingsPath.FullName }
 
-Write-Output $results
-
 foreach ($result in $results)
 {
-    Write-Output "item of total $($results.Count)"
     $message = $result.RuleName + ": " + $result.Message
     Write-FileError -Path $result.ScriptPath -Line $result.Line -Column $result.Column $message
 }
-
-Write-Output "Do we even reach this point?"
 
 exit $results.Count
