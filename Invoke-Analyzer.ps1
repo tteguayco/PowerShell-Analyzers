@@ -78,6 +78,8 @@ else
     exit -1
 }
 
+Write-Output (Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules)
+
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
     % { Invoke-ScriptAnalyzer $_ -Settings $SettingsPath.FullName }
 
