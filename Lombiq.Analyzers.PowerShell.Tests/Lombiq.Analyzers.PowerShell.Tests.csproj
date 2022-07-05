@@ -13,11 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.Cli\Lombiq.HelpfulLibraries.Cli.csproj" />
     <ProjectReference Include="..\..\..\test\Lombiq.Tests\Lombiq.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CliWrap" Version="3.4.4"/>
+    <PackageReference Include="CliWrap" Version="3.4.4" />
   </ItemGroup>
 
 </Project>
