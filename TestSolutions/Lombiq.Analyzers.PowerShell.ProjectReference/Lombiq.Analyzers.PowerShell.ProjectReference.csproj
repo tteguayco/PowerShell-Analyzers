@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    
+    <!-- This is only needed for stuff in the TestSolutions directory becuase it is normally excluded exactly because it
+         has the intentional violations. -->
+    <PowerShellAnalyzersArguments>-ForMsBuild -IncludeTestSolutions</PowerShellAnalyzersArguments>
+  </PropertyGroup>
+  
+  <Import Project="..\..\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.csproj" />
+  </ItemGroup>
+
+  <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="..\Violate-Analyzers.ps1" DestinationFolder="$(MSBuildThisFileDirectory)" />
+  </Target>
+
+</Project>
