@@ -12,7 +12,7 @@ param(
 # This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } but
 # much faster. For example this is relevant for ignoring node_modules.
 # - Measure-Command { Find-Recursively -Path . -IncludeFile *.ps1 -ExcludeDirectory node_modules } => 3.83s
-# - Measure-Command { Get-ChildItem -Recurse -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } } => 111.27s
+# - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } } => 111.27s
 function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] $ExcludeDirectory)
 {
     $ExcludeDirectory = $ExcludeDirectory.ToUpperInvariant()
@@ -24,7 +24,9 @@ function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] 
             return
         }
 
-        Get-ChildItem $Here |
+        # The -Force switch is necessary to show hidden results, especially on Linux where entries starting with dot
+        # are hidden by default.
+        Get-ChildItem $Here -Force |
             % {
                 if ($_ -is [System.IO.DirectoryInfo]) { Find-Inner $_ }
                 elseif ($_.Name -like $IncludeFile) { $_ }
@@ -36,7 +38,7 @@ function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] 
 
 function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [int] $Column = 0)
 {
-    if ($Path) { $Path = Get-ChildItem $Path }
+    if ($Path) { $Path = Get-Item $Path }
 
     if ($ForGitHubActions)
     {
