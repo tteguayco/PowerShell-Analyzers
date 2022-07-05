@@ -1,7 +1,8 @@
 param(
     $SettingsPath = (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'PSScriptAnalyzerSettings.psd1'),
     [Switch] $ForGitHubActions,
-    [Switch] $ForMsBuild
+    [Switch] $ForMsBuild,
+    [Switch] $IncludeTestSolutions
 )
 
 # This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } but
@@ -70,6 +71,7 @@ else
 }
 
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
+    ? { $IncludeTestSolutions -or $_.FullName.Replace('\', '/') -notlike '*/Lombiq.Analyzers.PowerShell/TestSolutions/*' } |
     % { Invoke-ScriptAnalyzer $_ -Settings $SettingsPath.FullName }
 
 foreach ($result in $results)
