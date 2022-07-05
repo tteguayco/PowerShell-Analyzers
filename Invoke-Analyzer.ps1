@@ -83,6 +83,7 @@ $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
 
 foreach ($result in $results)
 {
+    Write-Output "item of total $($results.Count)"
     $message = $result.RuleName + ": " + $result.Message
     Write-FileError -Path $result.ScriptPath -Line $result.Line -Column $result.Column $message
 }
