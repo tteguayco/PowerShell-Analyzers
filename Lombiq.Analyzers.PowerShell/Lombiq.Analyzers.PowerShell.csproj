@@ -23,6 +23,7 @@
     <None Include="..\Readme.md" />
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
     <None Include="Lombiq.Analyzers.PowerShell.targets" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.targets" />
+    <None Include="Lombiq.Analyzers.PowerShell.Nuget.props" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.props" />
   </ItemGroup>
 
 </Project>

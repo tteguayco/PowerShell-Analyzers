@@ -10,8 +10,8 @@
     <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND !Exists($(SolutionDir))"
       >$(ProjectDir)</PowerShellAnalyzersRootDirectory>
 
-    <PowerShellAnalyzersScriptDirectory Condition="'$(NuGetBuild)' != 'true'">$(MSBuildThisFileDirectory)</PowerShellAnalyzersScriptDirectory>
-    <PowerShellAnalyzersScriptDirectory Condition="'$(NuGetBuild)' == 'true'">$(MSBuildThisFileDirectory)..\</PowerShellAnalyzersScriptDirectory>
+    <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' != 'true'">$(MSBuildThisFileDirectory)</PowerShellAnalyzersScriptDirectory>
+    <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' == 'true'">$(MSBuildThisFileDirectory)..\</PowerShellAnalyzersScriptDirectory>
 
     <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == ''">-ForMsBuild</PowerShellAnalyzersArguments>
   </PropertyGroup>
