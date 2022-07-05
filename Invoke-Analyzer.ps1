@@ -9,6 +9,31 @@ param(
     [Switch] $ForMsBuild
 )
 
+# This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } but
+# much faster. For example this is relevant for ignoring node_modules.
+# - Measure-Command { Find-Recursively -Path . -IncludeFile *.ps1 -ExcludeDirectory node_modules } => 3.83s
+# - Measure-Command { Get-ChildItem -Recurse -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } } => 111.27s
+function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] $ExcludeDirectory)
+{
+    $ExcludeDirectory = $ExcludeDirectory.ToUpperInvariant()
+
+    function Find-Inner([System.IO.DirectoryInfo] $Here)
+    {
+        if ($Here.Name -like $ExcludeDirectory)
+        {
+            return
+        }
+
+        Get-ChildItem $Here |
+            % {
+                if ($_ -is [System.IO.DirectoryInfo]) { Find-Inner $_ }
+                elseif ($_.Name -like $IncludeFile) { $_ }
+            }
+    }
+
+    Find-Inner (Get-Item .)
+}
+
 function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [int] $Column = 0)
 {
     if ($Path) { $Path = Get-ChildItem $Path }
@@ -49,7 +74,7 @@ else
     exit -1
 }
 
-$results = Get-ChildItem -Recurse -Force -Include *.ps1 |
+$results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
     % { Invoke-ScriptAnalyzer $_ -Settings $SettingsPath.FullName }
 
 foreach ($result in $results)
