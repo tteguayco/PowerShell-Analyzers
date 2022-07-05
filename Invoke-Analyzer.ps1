@@ -81,6 +81,8 @@ else
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
     % { Invoke-ScriptAnalyzer $_ -Settings $SettingsPath.FullName }
 
+Write-Output $results
+
 foreach ($result in $results)
 {
     Write-Output "item of total $($results.Count)"
