@@ -22,7 +22,7 @@ function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] 
 
         # The -Force switch is necessary to show hidden results, especially on Linux where entries starting with dot
         # are hidden by default.
-        Get-ChildItem $Here -Force |
+        Get-ChildItem $Here.FullName -Force |
             % {
                 if ($_ -is [System.IO.DirectoryInfo]) { Find-Inner $_ }
                 elseif ($_.Name -like $IncludeFile) { $_ }
@@ -72,7 +72,7 @@ else
 
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
     ? { $IncludeTestSolutions -or $_.FullName.Replace('\', '/') -notlike '*/Lombiq.Analyzers.PowerShell/TestSolutions/*' } |
-    % { Invoke-ScriptAnalyzer $_ -Settings $SettingsPath.FullName }
+    % { Invoke-ScriptAnalyzer $_.FullName -Settings $SettingsPath.FullName }
 
 foreach ($result in $results)
 {
