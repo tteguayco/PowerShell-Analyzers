@@ -24,6 +24,8 @@
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
     <None Include="Lombiq.Analyzers.PowerShell.targets" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.targets" />
     <None Include="Lombiq.Analyzers.PowerShell.Nuget.props" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.props" />
+    <None Include="Invoke-Analyzer.ps1" Pack="true" PackagePath="" />
+    <None Include="PSScriptAnalyzerSettings.psd1" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

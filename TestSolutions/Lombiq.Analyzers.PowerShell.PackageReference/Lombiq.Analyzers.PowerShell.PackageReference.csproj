@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <!-- This is only needed, because the script normally excludes the directory this solution resides it -->
+    <PowerShellAnalyzersArguments>-ForMsBuild -IncludeTestSolutions</PowerShellAnalyzersArguments>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lombiq.Analyzers.PowerShell" Version="1.0.0-osoe-150.4" />
+    <PackageReference Include="Lombiq.Analyzers.PowerShell" Version="1.0.0-osoe-150.5" />
   </ItemGroup>
 
   <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
