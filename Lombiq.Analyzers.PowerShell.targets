@@ -5,9 +5,6 @@
     <CreatePowerShellAnalyzersStampFile>false</CreatePowerShellAnalyzersStampFile> -->
     <PowerShellAnalyzersStampFile>.ps1-analyzer-stamp</PowerShellAnalyzersStampFile>
 
-    <PowerShellAnalyzersOutputType Condition="'$(GITHUB_ENV)' != ''">-ForGitHubAction</PowerShellAnalyzersOutputType>
-    <PowerShellAnalyzersOutputType Condition="'$(GITHUB_ENV)' == ''">-ForMsBuild</PowerShellAnalyzersOutputType>
-
     <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND Exists($(SolutionDir))"
       >$(SolutionDir)</PowerShellAnalyzersRootDirectory>
     <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND !Exists($(SolutionDir))"
@@ -27,11 +24,11 @@
     </Exec>
     <!-- Use PowerShell 7+ if installed. -->
     <Exec Condition="'$(PowerShellCoreExitCode)' == '0'"
-          Command="pwsh $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersOutputType)"
+          Command="pwsh $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 -ForMsBuild"
           WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
     <!-- Otherwise use Windows PowerShell. -->
     <Exec Condition="'$(PowerShellCoreExitCode)' != '0'"
-          Command="powershell $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersOutputType)"
+          Command="powershell $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 -ForMsBuild"
           WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
     <Touch Condition="'$(CreatePowerShellAnalyzersStampFile)' != 'false'"
            Files="$(PowerShellAnalyzersStampFile)"
