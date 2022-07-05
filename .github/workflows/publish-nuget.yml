@@ -7,6 +7,10 @@ on:
 
 jobs:
   call-publish-workflow:
-    uses: Lombiq/GitHub-Actions/.github/workflows/publish.yml@dev
+    uses: Lombiq/GitHub-Actions/.github/workflows/publish.yml@issue/OSOE-150
+    with:
+      # These warnings are related to the tooling erroneously assuming that a ps1 file must be an 
+      # (un)install script. In this repo the ps1 files are assets to be used by the consumer.
+      dotnet-pack-ignore-warning: NU5110 NU5111
     secrets:
       API_KEY: ${{ secrets.DEFAULT_NUGET_PUBLISH_API_KEY }}
