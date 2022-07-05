@@ -71,7 +71,10 @@ else
 }
 
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
-    ? { $IncludeTestSolutions -or $_.FullName.Replace('\', '/') -notlike '*/Lombiq.Analyzers.PowerShell/TestSolutions/*' } |
+    ? { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
+        $IncludeTestSolutions -or -not (
+            $_.Name -eq 'Violate-Analyzers.ps1' -and
+            ($_.Directory.Name -eq 'TestSolutions' -or $_.Directory.Directory.Name -eq 'TestSolutions')) } |
     % { Invoke-ScriptAnalyzer $_.FullName -Settings $SettingsPath.FullName }
 
 foreach ($result in $results)
