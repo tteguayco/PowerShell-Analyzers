@@ -34,8 +34,6 @@ function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] 
     Find-Inner (Get-Item .)
 }
 
-$outputCache = New-Object "System.Text.StringBuilder"
-
 function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [int] $Column = 0)
 {
     if ($Path) { $Path = Get-ChildItem $Path }
@@ -43,8 +41,7 @@ function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [in
     if ($ForGitHubActions)
     {
         $Message = $Message -replace '\s*(\r?\n\s*)+', ' '
-        $outputCache.AppendLine(
-            "::error$(if ($Path) { " file=$Path,line=$Line,col=$Column::$Message" } else { "::$Message" })")
+        Write-Output "::error$(if ($Path) { " file=$Path,line=$Line,col=$Column::$Message" } else { "::$Message" })"
     }
     elseif ($ForMsBuild)
     {
@@ -74,11 +71,10 @@ if (Test-Path $SettingsPath)
 else
 {
     Write-FileError "The settings file `"$SettingsPath`" does not exist."
-    Write-Output $outputCache.ToString()
     exit -1
 }
 
-Write-Output (Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules)
+Write-Output (Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules | % { $_.FullName })
 
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
     % { Invoke-ScriptAnalyzer $_ -Settings $SettingsPath.FullName }
@@ -94,6 +90,4 @@ foreach ($result in $results)
 
 Write-Output "Do we even reach this point?"
 
-# Printing out all the errors at once on GH, becuase otherwise it will stop after the first one in Linux.
-Write-Output $outputCache.ToString()
 exit $results.Count
