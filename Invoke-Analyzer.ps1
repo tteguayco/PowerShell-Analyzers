@@ -1,8 +1,3 @@
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
-    "PSReviewUnusedParameter",
-    "ForGitHubActions",
-    Justification = "False positive (see https://github.com/PowerShell/PSScriptAnalyzer/issues/1472).")]
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "ForMsBuild", Justification = "Same.")]
 param(
     $SettingsPath = (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'PSScriptAnalyzerSettings.psd1'),
     [Switch] $ForGitHubActions,
@@ -48,8 +43,6 @@ function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [in
     elseif ($ForMsBuild)
     {
         if (-not $Message.Contains(":")) { $Message = ": $Message" }
-
-        echo "IS FILE:  $(-not -not $Path)"
 
         if ($Path)
         {
