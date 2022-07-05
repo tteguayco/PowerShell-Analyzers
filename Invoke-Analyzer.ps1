@@ -61,7 +61,7 @@ function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [in
 
 if (Test-Path $SettingsPath)
 {
-    $SettingsPath = Get-ChildItem $SettingsPath
+    $SettingsPath = Get-Item $SettingsPath
 }
 else
 {
