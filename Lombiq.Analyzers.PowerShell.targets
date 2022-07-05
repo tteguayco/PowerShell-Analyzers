@@ -21,8 +21,6 @@
     Inputs="**\*.ps1"
     Outputs="$(PowerShellAnalyzersStampFile)">
 
-    <Warning Text="Executing Invoke-Analyzer in [$(PowerShellAnalyzersRootDirectory)] ..." />
-
     <!-- Check if PowerShell 7+ (also known as Powershell Core or pwsh) is installed. -->
     <Exec Command="pwsh -v" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="PowerShellCoreExitCode"/>

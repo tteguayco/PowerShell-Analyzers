@@ -15,7 +15,7 @@ function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [in
     if ($ForGitHubActions)
     {
         $Message = $Message -replace '\s*(\r?\n\s*)+', ' '
-        Write-Output $(if ($Path) { "::error file=$Path,line=$Line,col=$Column::$Message" } else { "::error::$Message" })
+        Write-Output "::error" + $(if ($Path) { " file=$Path,line=$Line,col=$Column::$Message" } else { "::$Message" })
     }
     elseif ($ForMsBuild)
     {
