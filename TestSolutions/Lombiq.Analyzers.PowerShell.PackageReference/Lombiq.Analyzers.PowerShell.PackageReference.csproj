@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lombiq.Analyzers.PowerShell" Version="1.0.0-osoe-150.0" />
+    <PackageReference Include="Lombiq.Analyzers.PowerShell" Version="1.0.0-osoe-150.3" />
   </ItemGroup>
+
+  <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="..\Violate-Analyzers.ps1" DestinationFolder="$(MSBuildThisFileDirectory)" />
+  </Target>
 
 </Project>
