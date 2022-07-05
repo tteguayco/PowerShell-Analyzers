@@ -23,8 +23,6 @@
     <None Include="..\Readme.md" />
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
     <None Include="Lombiq.Analyzers.PowerShell.targets" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.targets" />
-    <None Include="Invoke-Analyzer.ps1" Pack="true" PackagePath="build\Invoke-Analyzer.ps1" />
-    <None Include="PSScriptAnalyzerSettings.psd1" Pack="true" PackagePath="build\PSScriptAnalyzerSettings.psd1" />
   </ItemGroup>
 
 </Project>

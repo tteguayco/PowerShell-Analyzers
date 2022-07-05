@@ -10,6 +10,9 @@
     <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND !Exists($(SolutionDir))"
       >$(ProjectDir)</PowerShellAnalyzersRootDirectory>
 
+    <PowerShellAnalyzersScriptDirectory Condition="'$(NuGetBuild)' != 'true'">$(MSBuildThisFileDirectory)</PowerShellAnalyzersScriptDirectory>
+    <PowerShellAnalyzersScriptDirectory Condition="'$(NuGetBuild)' == 'true'">$(MSBuildThisFileDirectory)..\</PowerShellAnalyzersScriptDirectory>
+
     <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == ''">-ForMsBuild</PowerShellAnalyzersArguments>
   </PropertyGroup>
 
@@ -26,11 +29,11 @@
     </Exec>
     <!-- Use PowerShell 7+ if installed. -->
     <Exec Condition="'$(PowerShellCoreExitCode)' == '0'"
-          Command="pwsh $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
+          Command="pwsh $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
           WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
     <!-- Otherwise use Windows PowerShell. -->
     <Exec Condition="'$(PowerShellCoreExitCode)' != '0'"
-          Command="powershell $(MSBuildThisFileDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
+          Command="powershell $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
           WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
     <Touch Condition="'$(CreatePowerShellAnalyzersStampFile)' != 'false'"
            Files="$(PowerShellAnalyzersStampFile)"
