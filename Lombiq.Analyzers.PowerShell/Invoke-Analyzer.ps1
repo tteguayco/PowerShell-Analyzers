@@ -70,6 +70,29 @@ else
     exit -1
 }
 
+try
+{
+    # Detect if PSScriptAnalyzer is installed
+    Invoke-ScriptAnalyzer $SettingsPath.FullName
+}
+catch
+{
+    $installVersion = "1.20.0"
+    try
+    {
+        # Attempt to install it automatically. This will fail on Windows Powershell becuase you have to be admin.
+        Install-Module -Name PSScriptAnalyzer -Force -RequiredVersion $installVersion
+    }
+    catch
+    {
+        Write-Error ("Unable to detect Invoke-ScriptAnalyzer and failed to install PSScriptAnalyzer. If you are on " +
+            "Windows Powershell, open an administrator shell and type `"Install-Module -Name PSScriptAnalyzer " +
+            "-Force -RequiredVersion $installVersion`". Otherwise see https://docs.microsoft.com/en-us/powershell/" +
+            "utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer to learn more.")
+        exit -2
+    }
+}
+
 $results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
     ? { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
