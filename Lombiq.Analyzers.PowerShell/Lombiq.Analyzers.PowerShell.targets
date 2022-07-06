@@ -24,8 +24,8 @@
     Inputs="**\*.ps1"
     Outputs="$(PowerShellAnalyzersStampFile)">
 
-    <!-- Check if PowerShell 7+ (also known as Powershell Core or pwsh) is installed. This also gets the correct result
-         in case pwsh is an alias to powershell -->
+    <!-- Check if PowerShell 7+ (also known as PowerShell Core or pwsh) is installed. This also gets the correct result
+         in case pwsh is an alias to powershell. -->
     <Exec Command="pwsh -Version" IgnoreExitCode="true">
       <Output TaskParameter="ExitCode" PropertyName="PowerShellCoreExitCode"/>
     </Exec>
