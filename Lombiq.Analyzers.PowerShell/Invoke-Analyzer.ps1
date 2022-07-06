@@ -9,7 +9,7 @@ param(
 # much faster. For example this is relevant for ignoring node_modules.
 # - Measure-Command { Find-Recursively -Path . -IncludeFile *.ps1 -ExcludeDirectory node_modules } => 3.83s
 # - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } } => 111.27s
-function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] $ExcludeDirectory)
+function Find-Recursively([string] $Path = '.', [string[]] $IncludeFile, [string] $ExcludeDirectory)
 {
     $ExcludeDirectory = $ExcludeDirectory.ToUpperInvariant()
 
@@ -22,11 +22,11 @@ function Find-Recursively([string] $Path = '.', [string] $IncludeFile, [string] 
 
         # The -Force switch is necessary to show hidden results, especially on Linux where entries starting with dot
         # are hidden by default.
-        Get-ChildItem $Here.FullName -Force |
-            % {
-                if ($_ -is [System.IO.DirectoryInfo]) { Find-Inner $_ }
-                elseif ($_.Name -like $IncludeFile) { $_ }
-            }
+        foreach ($child in (Get-ChildItem $Here.FullName -Force))
+        {
+            if ($child -is [System.IO.DirectoryInfo]) { Find-Inner $child }
+            elseif (($IncludeFile | ? { $child.name -like $_ }).Count) { $child }
+        }
     }
 
     Find-Inner (Get-Item .)
@@ -93,7 +93,7 @@ catch
     }
 }
 
-$results = Find-Recursively -IncludeFile *.ps1 -ExcludeDirectory node_modules |
+$results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
     ? { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
             $_.Name -eq 'Violate-Analyzers.ps1' -and
