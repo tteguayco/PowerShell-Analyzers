@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lombiq.Analyzers.PowerShell" Version="1.0.0-osoe-150.8" />
+    <PackageReference Include="Lombiq.Analyzers.PowerShell" Version="1.0.0-osoe-150.10" />
   </ItemGroup>
 
   <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
