@@ -40,7 +40,7 @@ You can invoke it from an _action.yml_ file like this:
 
 The `-ForGitHubAction` optional displays the results using [error workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message). These create file annotations pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary page. If the violating files aren't in a submodule then they will be marked in the related pull request's Files tab as well.
 
-If you are using our `build-dotnet` action or building-related reusable workflows from [Lombiq GitHub Actions](https://github.com/Lombiq/GitHub-Actions), PowerShell linting is already included.
+If you are using our `build-dotnet` action or build-related reusable workflows from [Lombiq GitHub Actions](https://github.com/Lombiq/GitHub-Actions), PowerShell linting is already included.
 
 Just set the value of the `powershell-analyzer-path` to the path of the _Invoke-Analyzer.ps1_ file relative to your repository root. In case it's _./tools/Lombiq.Analyzers.PowerShell/Invoke-Analyzer.ps1_ you don't need additional configuration.
 
@@ -54,11 +54,11 @@ If this project is included via a submodule, edit the _csproj_ file of your prim
 <Import Project="path\to\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.targets" />
 ```
 
-If you include the project as a NuGet package, you it will work as-is.
+If you include the project as a NuGet package, it will work as-is.
 
-Additionally you can set these properties in the importing project's `<PropertyGroup>`:
-- `<PowerShellAnalyzersRootDirectory>`: The analysis root directory, only files recursively found here are checked. If not specified, it uses the solution directory if present (if you are building the whole solution), otherwise the package directory (if you are building just the project).
-- `<PowerShellAnalyzersArguments>`: Set it to customize the arguments passed to the script. This is useful if you want to provide your own rules configuration by setting it `-ForMsBuild -SettingsPath path/to/settings.psd1`. If not specified, it's value is `-ForMsBuild` unless a GitHub Actions environment is detected (via the `$GITHUB_ENV` variable) in which case the default value is `-ForGitHubAction`.
+Additionally, you can set these properties in the importing project's `<PropertyGroup>`:
+- `<PowerShellAnalyzersRootDirectory>`: The analysis root directory, only files recursively found here are checked. If not specified, it uses the solution directory if present (if you are building the whole solution), otherwise the project directory (if you are building just the project).
+- `<PowerShellAnalyzersArguments>`: Set it to customize the arguments passed to the script. This is useful if you want to provide your own rules configuration by setting it to `-ForMsBuild -SettingsPath path/to/settings.psd1`. If not specified, its value is `-ForMsBuild` unless a GitHub Actions environment is detected (via the `$GITHUB_ENV` variable) in which case the default value is `-ForGitHubAction`.
 
 Using the configuration below you can 
 
