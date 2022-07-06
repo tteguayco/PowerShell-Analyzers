@@ -13,7 +13,8 @@
     <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' != 'true'">$(MSBuildThisFileDirectory)</PowerShellAnalyzersScriptDirectory>
     <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' == 'true'">$(MSBuildThisFileDirectory)..\</PowerShellAnalyzersScriptDirectory>
 
-    <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == ''">-ForMsBuild</PowerShellAnalyzersArguments>
+    <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == '' AND '$(GITHUB_ENV)' == ''">-ForMsBuild</PowerShellAnalyzersArguments>
+    <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == '' AND '$(GITHUB_ENV)' != ''">-ForGitHubAction</PowerShellAnalyzersArguments>
   </PropertyGroup>
 
   <Target
@@ -23,18 +24,24 @@
     Inputs="**\*.ps1"
     Outputs="$(PowerShellAnalyzersStampFile)">
 
-    <!-- Check if PowerShell 7+ (also known as Powershell Core or pwsh) is installed. -->
-    <Exec Command="pwsh -v" IgnoreExitCode="true">
+    <!-- Check if PowerShell 7+ (also known as Powershell Core or pwsh) is installed. This also gets the correct result
+         in case pwsh is an alias to powershell -->
+    <Exec Command="pwsh -Version" IgnoreExitCode="true">
       <Output TaskParameter="ExitCode" PropertyName="PowerShellCoreExitCode"/>
     </Exec>
-    <!-- Use PowerShell 7+ if installed. -->
-    <Exec Condition="'$(PowerShellCoreExitCode)' == '0'"
-          Command="pwsh $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
-          WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
-    <!-- Otherwise use Windows PowerShell. -->
-    <Exec Condition="'$(PowerShellCoreExitCode)' != '0'"
-          Command="powershell $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
-          WorkingDirectory="$(PowerShellAnalyzersRootDirectory)" />
+
+    <!-- Select PowerShell executable. -->
+    <PropertyGroup Condition="'$(PowerShellCoreExitCode)' == '0'">
+      <PowerShellExecutable>pwsh</PowerShellExecutable>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(PowerShellCoreExitCode)' != '0'">
+      <PowerShellExecutable>powershell</PowerShellExecutable>
+    </PropertyGroup>
+
+    <Exec Command="$(PowerShellExecutable) $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
+          WorkingDirectory="$(PowerShellAnalyzersRootDirectory)"
+          IgnoreStandardErrorWarningFormat="$(PowerShellAnalyzersArguments.Contains('-ForGitHubAction'))"/>
+
     <Touch Condition="'$(CreatePowerShellAnalyzersStampFile)' != 'false'"
            Files="$(PowerShellAnalyzersStampFile)"
            AlwaysCreate="true" />
