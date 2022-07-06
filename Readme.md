@@ -13,7 +13,7 @@ Do you want to quickly try out this project and see it in action? Check it out i
 
 ### Pre-requisites
 
-The *PSScriptAnalyzer* module must be installed. If it's not installed, then running the script in `pwsh` will output no results and running it in `powershell` will throw an exception. Follow the steps [here](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer).
+The *PSScriptAnalyzer* module must be installed. The script will attempt to auto-install it, however if this fails (e.g. on Windows PowerShell you have to be admin to install modules) follow the steps [here](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer).
 
 Note that if you are usnig this in GitHub Actions, the common images (`windows-latest` and `ubuntu-latest`) already have it so you don't need to install anything.
 
