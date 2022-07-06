@@ -40,7 +40,7 @@ You can invoke it from an _action.yml_ file like this:
 
 The `-ForGitHubAction` optional displays the results using [error workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message). These create file annotations pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary page. If the violating files aren't in a submodule then they will be marked in the related pull request's Files tab as well.
 
-If you are using our `build-dotnet` action or building-related reusable workflows from [Lombiq GitHub Actions](https://github.com/Lombiq/GitHub-Actions), PowerShell linting is already included.
+If you are using our `build-dotnet` action or build-related reusable workflows from [Lombiq GitHub Actions](https://github.com/Lombiq/GitHub-Actions), PowerShell linting is already included.
 
 Just set the value of the `powershell-analyzer-path` to the path of the _Invoke-Analyzer.ps1_ file relative to your repository root. In case it's _./tools/Lombiq.Analyzers.PowerShell/Invoke-Analyzer.ps1_ you don't need additional configuration.
 
