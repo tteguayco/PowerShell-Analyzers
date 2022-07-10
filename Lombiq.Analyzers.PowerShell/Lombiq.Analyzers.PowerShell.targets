@@ -13,8 +13,7 @@
     <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' != 'true'">$(MSBuildThisFileDirectory)</PowerShellAnalyzersScriptDirectory>
     <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' == 'true'">$(MSBuildThisFileDirectory)..\</PowerShellAnalyzersScriptDirectory>
 
-    <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == '' AND '$(GITHUB_ENV)' == ''">-ForMsBuild</PowerShellAnalyzersArguments>
-    <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == '' AND '$(GITHUB_ENV)' != ''">-ForGitHubAction</PowerShellAnalyzersArguments>
+    <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == ''">-ForMsBuild</PowerShellAnalyzersArguments>
   </PropertyGroup>
 
   <Target
