@@ -97,7 +97,7 @@ $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDir
     ? { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
             $_.Name -eq 'Violate-Analyzers.ps1' -and
-            ($_.Directory.Name -eq 'TestSolutions' -or $_.Directory.Directory.Name -eq 'TestSolutions')) } |
+            ($_.Directory.Name -eq 'TestSolutions' -or $_.Directory.Parent.Name -eq 'TestSolutions')) } |
     % { Invoke-ScriptAnalyzer $_.FullName -Settings $SettingsPath.FullName } |
     # Only Warning and above (ignore "Information" type results).
     ? { $_.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
