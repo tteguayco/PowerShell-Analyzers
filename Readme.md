@@ -60,7 +60,12 @@ Additionally, you can set these properties in the importing project's `<Property
 - `<PowerShellAnalyzersRootDirectory>`: The analysis root directory, only files recursively found here are checked. If not specified, it uses the solution directory if present (if you are building the whole solution), otherwise the project directory (if you are building just the project).
 - `<PowerShellAnalyzersArguments>`: Set it to customize the arguments passed to the script. This is useful if you want to provide your own rules configuration by setting it to `-ForMsBuild -SettingsPath path/to/settings.psd1`. If not specified, its value is `-ForMsBuild` unless a GitHub Actions environment is detected (via the `$GITHUB_ENV` variable) in which case the default value is `-ForGitHubAction`.
 
-Using the configuration below you can 
+#### Visual Studio Code
+
+Live analysis is outside of the scope of this project, however you can use the Visual Studio Code extension:
+1. Install it from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell).
+2. Go to Settings and paste `powershell.scriptAnalysis.settingsPath` into the search bar.
+3. Set it to the path of the _PSScriptAnalyzerSettings.psd1_ file to use our settings.
 
 ## Contributing and support
 
