@@ -71,7 +71,7 @@ else
 }
 
 $installVersion = "1.20.0"
-if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version -eq [Version]$installVersion)
+if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version -ne [Version]$installVersion)
 {
     try
     {
