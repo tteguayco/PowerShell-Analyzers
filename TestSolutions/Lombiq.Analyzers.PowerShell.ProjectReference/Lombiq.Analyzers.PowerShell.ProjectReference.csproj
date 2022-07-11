@@ -6,10 +6,6 @@
 
   <Import Project="..\..\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.targets" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.csproj" />
-  </ItemGroup>
-
   <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="..\Violate-Analyzers.ps1" DestinationFolder="$(MSBuildThisFileDirectory)" />
   </Target>
