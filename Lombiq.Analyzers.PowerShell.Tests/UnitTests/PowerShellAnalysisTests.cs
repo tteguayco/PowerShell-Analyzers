@@ -39,7 +39,7 @@ public class PowerShellAnalysisTests
         if (!await IsPowerShellCoreInstalledAsync()) return;
 
         var solutionDirectory = _testSolutions.GetDirectories(directory).Single().Name;
-        var solutionPath = Path.Combine(solutionDirectory, solutionDirectory + ".sln");
+        var solutionPath = Path.Combine("..", "..", "..", "..", "TestSolutions", solutionDirectory, solutionDirectory + ".sln");
 
         var exception = (InvalidOperationException)await Should.ThrowAsync(
             () => DotnetBuildHelper.ExecuteStaticCodeAnalysisAsync(solutionPath),
