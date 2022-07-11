@@ -70,14 +70,9 @@ else
     exit -1
 }
 
-try
+$installVersion = "1.20.0"
+if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version -eq [Version]$installVersion)
 {
-    # Detect if PSScriptAnalyzer is installed
-    Invoke-ScriptAnalyzer $SettingsPath.FullName
-}
-catch
-{
-    $installVersion = "1.20.0"
     try
     {
         # Attempt to install it automatically. This will fail on Windows Powershell becuase you have to be admin.
