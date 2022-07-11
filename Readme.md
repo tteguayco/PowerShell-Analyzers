@@ -1,10 +1,11 @@
 # Lombiq PowerShell Analyzers
 
+[![Lombiq.Analyzers.PowerShell NuGet](https://img.shields.io/nuget/v/Lombiq.Analyzers.PowerShell?label=Lombiq.Analyzers.PowerShell)](https://www.nuget.org/packages/Lombiq.Analyzers.PowerShell/)
 
 
 ## About
 
-Powershell static code analysis via [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) and [our configuration for it](PSScriptAnalyzerSettings.psd1).
+PowerShell static code analysis via [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer)  and [Lombiq's recommended configuration for it](Lombiq.Analyzers.PowerShell/PSScriptAnalyzerSettings.psd1).
 
 Do you want to quickly try out this project and see it in action? Check it out in our [Open-Source Orchard Core Extensions](https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions) full Orchard Core solution and also see our other useful Orchard Core-related open-source projects!
 
@@ -33,7 +34,7 @@ The `-SettingsPath` can be omitted, in this case the _PSScriptAnalyzerSettings.p
 
 You can invoke it from an _action.yml_ file like this:
 ```yaml
-    - name: Lint PowerShell scripts
+    - name: Analyze PowerShell scripts
       shell: pwsh
       run: ${{ github.action_path }}/Invoke-Analyzer.ps1 -ForGitHubAction
 ```
@@ -46,7 +47,7 @@ Just set the value of the `powershell-analyzer-path` to the path of the _Invoke-
 
 #### MSBuild
 
-This way you associate the analyzer with a .NET project and MSBuild automatically invokes analysis before building. If the analysis passes, it creates a timestamp and won't perform the analysis again until there is a new project.
+This way you associate the analyzer with a .NET project and MSBuild automatically invokes analysis before building. If the analysis passes, it creates a timestamp and won't perform the analysis again until a new script file has been added or an existing one modified.
 
 If this project is included via a submodule, edit the _csproj_ file of your primary project(s) and add the following:
 

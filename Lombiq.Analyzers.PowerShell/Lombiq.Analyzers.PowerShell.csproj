@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Title>Lombiq PowerShell MSBuild Targets</Title>
+    <Title>Lombiq PowerShell Analyzers</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2022, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq PowerShell MSBuild Targets: Provides automatic Powershell script linting before building a .NET project. See the project website for detailed documentation.</Description>
+    <Description>Lombiq PowerShell Analyzers: PowerShell static code analysis via PSScriptAnalyzer (https://github.com/PowerShell/PSScriptAnalyzer) and Lombiq's recommended configuration for it. Integrated with GitHub Actions. See the project website for detailed documentation.</Description>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>Lombiq;Powershell;MSBuild</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/PowerShell-Analyzers</RepositoryUrl>
