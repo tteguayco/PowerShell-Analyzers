@@ -3,6 +3,7 @@ using CliWrap.Buffered;
 using Lombiq.HelpfulLibraries.Cli.Helpers;
 using Shouldly;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,18 +47,27 @@ public class PowerShellAnalysisTests
             typeof(InvalidOperationException));
 
         exception.Message.ShouldMatch(
-            @"The command [^\n]+Invoke-Analyzer.ps1 -ForMsBuild -IncludeTestSolutions[^\n]+exited with code 4\.",
+            @"The command [^\n]+pwsh[^\n]+Invoke-Analyzer.ps1 -ForMsBuild -IncludeTestSolutions[^\n]+exited with code 4\.",
             "The Invoke-Analyzer script's exit code should've been 4 because that's the number of expected violations.");
 
         MessageShouldContainViolationCodes(exception.Message);
     }
 
+    // Ideally this method should skip the test programmatically instead of returning a value. Once XUnit 2.4.2-pre.19
+    // or newer is available, we will have Assert.Skip(skipMessage) which does the same thing however it's not up. See
+    // commit https://github.com/xunit/assert.xunit/commit/e6a6d5d22bbc7097f8decad5b3c8cac8cf3fb386 for implementation
+    // and issue https://github.com/xunit/xunit/issues/2073 for more information.
     private static async Task<bool> IsPowerShellCoreInstalledAsync()
     {
         try
         {
-            await _powerShell.WithArguments("-?").ExecuteBufferedAsync();
-            return true;
+            // In MSBuild Windows Powershell will return 1 for any nonzero exit code, so an alias from powershell to
+            // pwsh is not suitable for these tests. We need actual Powershell 7+ for correct diagnostics.
+            var result = await _powerShell.WithArguments(new[] { "-c", "$host.Version.Major" }).ExecuteBufferedAsync();
+            var output = result.StandardOutput;
+
+            var major = int.Parse(output, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            return major >= 7;
         }
         catch
         {
