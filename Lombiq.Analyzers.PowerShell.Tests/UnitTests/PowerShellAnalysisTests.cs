@@ -47,7 +47,7 @@ public class PowerShellAnalysisTests
 
         exception.Message.ShouldMatch(
             @"The command [^\n]+Invoke-Analyzer.ps1 -ForMsBuild -IncludeTestSolutions[^\n]+exited with code 4\.",
-            "The Invoke-Analyzer script should've returned 4 exit code because that's the exact number of expected violations.");
+            "The Invoke-Analyzer script exit code should've been 4 because that's the exact number of expected violations.");
 
         MessageShouldContainViolationCodes(exception.Message);
     }
