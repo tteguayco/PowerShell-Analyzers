@@ -37,7 +37,7 @@
       <PowerShellExecutable>powershell</PowerShellExecutable>
     </PropertyGroup>
 
-    <Exec Command="$(PowerShellExecutable) $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
+    <Exec Command="$(PowerShellExecutable) -File $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
           WorkingDirectory="$(PowerShellAnalyzersRootDirectory)"
           IgnoreStandardErrorWarningFormat="$(PowerShellAnalyzersArguments.Contains('-ForGitHubAction'))"/>
 
