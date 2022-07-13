@@ -3,6 +3,7 @@ using CliWrap.Buffered;
 using Lombiq.HelpfulLibraries.Cli.Helpers;
 using Shouldly;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,13 +11,14 @@ using Xunit;
 
 namespace Lombiq.Analyzers.PowerShell.Tests.UnitTests;
 
+[SuppressMessage("Usage", "xUnit1004:Test methods should not be skipped", Justification = "Temporary.")]
 public class PowerShellAnalysisTests
 {
     private static readonly Command _powerShell = Cli.Wrap("pwsh");
 
     private static readonly DirectoryInfo _testSolutions = new(Path.Combine("..", "..", "..", "..", "TestSolutions"));
 
-    [Fact]
+    [Fact(Skip = "Performance evaluation")]
     public async Task DirectScriptInvocationShouldDisplayWarnings()
     {
         if (!await IsPsScriptAnalyzerInstalledAsync()) return;
@@ -31,7 +33,7 @@ public class PowerShellAnalysisTests
         MessageShouldContainViolationCodes(result.StandardError);
     }
 
-    [Theory]
+    [Theory(Skip = "Performance evaluation")]
     [InlineData("Lombiq.Analyzers.PowerShell.PackageReference")]
     [InlineData("Lombiq.Analyzers.PowerShell.ProjectReference")]
     public async Task BuildShouldDisplayWarnings(string directory)
