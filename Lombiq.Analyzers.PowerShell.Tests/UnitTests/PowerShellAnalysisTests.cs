@@ -18,7 +18,7 @@ public class PowerShellAnalysisTests
 
     private static readonly DirectoryInfo _testSolutions = new(Path.Combine("..", "..", "..", "..", "TestSolutions"));
 
-    [Fact(Skip = "Performance evaluation")]
+    [Fact]
     public async Task DirectScriptInvocationShouldDisplayWarnings()
     {
         if (!await IsPsScriptAnalyzerInstalledAsync()) return;
