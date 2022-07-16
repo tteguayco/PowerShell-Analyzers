@@ -31,4 +31,4 @@ jobs:
       build-expected-code-analysis-errors: |
         PSAvoidUsingEmptyCatchBlock
         PSUseApprovedVerbs
-        PSUseSingularNouns
+        PSUseSingularNouns 
