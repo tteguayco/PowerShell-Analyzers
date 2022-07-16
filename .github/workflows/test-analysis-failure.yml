@@ -1,0 +1,33 @@
+name: Test Analysis Failure
+
+# Runs for PRs opened for any branch, and pushes to the dev branch.
+on:
+  pull_request:
+  push:
+    branches:
+      - dev
+
+jobs:
+  call-test-analysis-failure-nuget:
+    name: Test Analysis Failure - NuGet PackageReference
+    uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@issue/OSOE-150
+    with:
+      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.PackageReference
+      timeout-minutes: 30
+      build-expected-code-analysis-errors: |
+        PSAvoidUsingEmptyCatchBlock
+        PSUseApprovedVerbs
+        PSUseSingularNouns
+
+  call-test-analysis-failure-nuget:
+    name: Test Analysis Failure - Local ProjectReference
+    uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@issue/OSOE-150
+    with:
+      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.ProjectReference
+      timeout-minutes: 30
+      build-expected-code-analysis-errors: |
+        PSAvoidUsingEmptyCatchBlock
+        PSUseApprovedVerbs
+        PSUseSingularNouns

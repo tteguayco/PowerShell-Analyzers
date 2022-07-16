@@ -11,7 +11,6 @@ using Xunit;
 
 namespace Lombiq.Analyzers.PowerShell.Tests.UnitTests;
 
-[SuppressMessage("Usage", "xUnit1004:Test methods should not be skipped", Justification = "Temporary.")]
 public class PowerShellAnalysisTests
 {
     private static readonly Command _powerShell = Cli.Wrap("pwsh");
@@ -31,27 +30,6 @@ public class PowerShellAnalysisTests
 
         result.ExitCode.ShouldNotBe(0);
         MessageShouldContainViolationCodes(result.StandardError);
-    }
-
-    [Theory(Skip = "Performance evaluation")]
-    [InlineData("Lombiq.Analyzers.PowerShell.PackageReference")]
-    [InlineData("Lombiq.Analyzers.PowerShell.ProjectReference")]
-    public async Task BuildShouldDisplayWarnings(string directory)
-    {
-        if (!await IsPsScriptAnalyzerInstalledAsync()) return;
-
-        var solutionDirectory = _testSolutions.GetDirectories(directory).Single().Name;
-        var solutionPath = Path.Combine("..", "..", "..", "..", "TestSolutions", solutionDirectory, solutionDirectory + ".sln");
-
-        var exception = (InvalidOperationException)await Should.ThrowAsync(
-            () => DotnetBuildHelper.ExecuteStaticCodeAnalysisAsync(solutionPath),
-            typeof(InvalidOperationException));
-
-        exception.Message.ShouldMatch(
-            @"The command [^\n]+Invoke-Analyzer.ps1 -ForMsBuild -IncludeTestSolutions[^\n]+exited with code 4\.",
-            "The Invoke-Analyzer script's exit code should've been 4 because that's the number of expected violations.");
-
-        MessageShouldContainViolationCodes(exception.Message);
     }
 
     // Ideally this method should skip the test programmatically instead of returning a value. Once XUnit 2.4.2-pre.19

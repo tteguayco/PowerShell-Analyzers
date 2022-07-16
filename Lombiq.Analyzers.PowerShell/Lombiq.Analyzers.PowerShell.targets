@@ -37,6 +37,13 @@
       <PowerShellExecutable>powershell</PowerShellExecutable>
     </PropertyGroup>
 
+    <!-- If we only have Windows PowerShell, only run if the module is installed. -->
+    <Exec Condition="'$(PowerShellCoreExitCode)' != '0'"
+          Command="powershell -c &quot;Get-InstalledModule PSScriptAnalyzer -ErrorAction Stop&quot;"
+          IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="ModuleExitCode"/>
+    </Exec>
+
     <Exec Command="$(PowerShellExecutable) -File $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
           WorkingDirectory="$(PowerShellAnalyzersRootDirectory)"
           IgnoreStandardErrorWarningFormat="$(PowerShellAnalyzersArguments.Contains('-ForGitHubAction'))"/>
