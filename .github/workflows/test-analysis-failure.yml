@@ -33,4 +33,4 @@ jobs:
         MSB3073: The command exited with non-zero code.
         PSAvoidUsingCmdletAliases: 'echo' is an alias of 'Write-Output'.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
-        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun. 
+        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
