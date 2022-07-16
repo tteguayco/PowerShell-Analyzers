@@ -16,10 +16,11 @@ jobs:
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.PackageReference
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
-        PSAvoidUsingEmptyCatchBlock
-        PSAvoidUsingCmdletAliases
-        PSUseApprovedVerbs
-        PSUseSingularNouns
+        MSB3073: The command exited with non-zero code.
+        PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
+        PSAvoidUsingCmdletAliases: 'echo' is an alias of 'Write-Output'.
+        PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
+        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
 
   call-test-analysis-failure-local:
     name: Test Analysis Failure - Local ProjectReference
@@ -29,6 +30,7 @@ jobs:
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.ProjectReference
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
-        PSAvoidUsingEmptyCatchBlock
-        PSUseApprovedVerbs
-        PSUseSingularNouns
+        MSB3073: The command exited with non-zero code.
+        PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
+        PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
+        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
