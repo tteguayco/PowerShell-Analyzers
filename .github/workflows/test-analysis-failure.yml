@@ -12,12 +12,11 @@ jobs:
     name: Test Analysis Failure - NuGet PackageReference
     uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@issue/OSOE-150
     with:
-      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      machine-types: "[\"windows-latest\"]"
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.PackageReference
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
         MSB3073: The command exited with non-zero code.
-        PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
         PSAvoidUsingCmdletAliases: 'echo' is an alias of 'Write-Output'.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
         PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
@@ -26,7 +25,7 @@ jobs:
     name: Test Analysis Failure - Local ProjectReference
     uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@issue/OSOE-150
     with:
-      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      machine-types: "[\"windows-latest\"]"
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.ProjectReference
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
