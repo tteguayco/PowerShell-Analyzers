@@ -10,4 +10,4 @@ node_modules/
 .pnpm-debug.log
 .ps1-analyzer-stamp
 /TestSolutions/Lombiq.Analyzers.PowerShell.*/Violate-Analyzers.ps1
-/TestSolutions/*/.editorconfig
+.editorconfig
