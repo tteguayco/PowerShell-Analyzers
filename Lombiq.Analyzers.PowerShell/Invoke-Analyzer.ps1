@@ -75,7 +75,7 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
 {
     try
     {
-        # Attempt to install it automatically. This will fail on Windows Powershell becuase you have to be admin.
+        # Attempt to install it automatically. This will fail on Windows PowerShell because you have to be admin.
         Install-Module -Name PSScriptAnalyzer -Force -RequiredVersion $installVersion
     }
     catch
