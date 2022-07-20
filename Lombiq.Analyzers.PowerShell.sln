@@ -5,6 +5,13 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.Analyzers.PowerShell", "Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.csproj", "{8802AF0F-D4CA-4ABA-8408-F4433013FF7B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Workflows", "GitHub Workflows", "{A44B4000-AF9F-47DD-A785-4778B6179090}"
+	ProjectSection(SolutionItems) = preProject
+		E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\publish-nuget.yml = E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\publish-nuget.yml
+		E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\test-analysis-failure.yml = E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\test-analysis-failure.yml
+		E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\verify-submodule-pull-request.yml = E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\verify-submodule-pull-request.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
