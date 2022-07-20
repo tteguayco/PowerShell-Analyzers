@@ -55,6 +55,8 @@ If this project is included via a submodule, edit the _csproj_ file of your prim
 <Import Project="path\to\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.targets" />
 ```
 
+You don't need to `<ProjectReference>` _Lombiq.Analyzers.PowerShell.csproj_.
+
 If you include the project as a NuGet package, it will work as-is.
 
 Additionally, you can set these properties in the importing project's `<PropertyGroup>`:
