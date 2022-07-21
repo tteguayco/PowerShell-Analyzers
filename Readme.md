@@ -72,7 +72,7 @@ Live analysis is outside of the scope of this project, however you can use the V
 
 ### Suppressing PSScriptAnalyzer rules
 
-Occasionally there is good reason to ignore an analyzer warning. In this case add the `[Diagnostics.CodeAnalysis.SuppressMessage('Rule Code', Justification = 'Explain reason.')]` attribute to the cmdlet's `param()`. For more information, see the module's [documentation](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/using-scriptanalyzer?view=ps-modules#suppressing-rules).
+Occasionally there is good reason to ignore an analyzer warning. In this case add the `[Diagnostics.CodeAnalysis.SuppressMessage('Rule Code', '', Justification = 'Explain reason.')]` attribute to the cmdlet's `param()`. For more information, see the module's [documentation](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/using-scriptanalyzer?view=ps-modules#suppressing-rules).
 
 ## Contributing and support
 
