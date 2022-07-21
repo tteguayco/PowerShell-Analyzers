@@ -1,0 +1,49 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- It's enabled by default. Copy this into your csproj file if you want to disable stamp creation.
+    <CreatePowerShellAnalyzersStampFile>false</CreatePowerShellAnalyzersStampFile> -->
+    <PowerShellAnalyzersStampFile>.ps1-analyzer-stamp</PowerShellAnalyzersStampFile>
+
+    <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND Exists($(SolutionDir))"
+      >$(SolutionDir)</PowerShellAnalyzersRootDirectory>
+    <PowerShellAnalyzersRootDirectory Condition="'$(PowerShellAnalyzersRootDirectory)' == '' AND !Exists($(SolutionDir))"
+      >$(ProjectDir)</PowerShellAnalyzersRootDirectory>
+
+    <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' != 'true'">$(MSBuildThisFileDirectory)</PowerShellAnalyzersScriptDirectory>
+    <PowerShellAnalyzersScriptDirectory Condition="'$(PowerShellAnalyzersNuGet)' == 'true'">$(MSBuildThisFileDirectory)..\</PowerShellAnalyzersScriptDirectory>
+
+    <PowerShellAnalyzersArguments Condition="'$(PowerShellAnalyzersArguments)' == ''">-ForMsBuild</PowerShellAnalyzersArguments>
+  </PropertyGroup>
+
+  <Target
+    Name="PowerShellValidation"
+    AfterTargets="AfterResolveReferences"
+    BeforeTargets="Compile"
+    Inputs="**\*.ps1"
+    Outputs="$(PowerShellAnalyzersStampFile)">
+
+    <!-- Check if PowerShell 7+ (also known as PowerShell Core or pwsh) is installed. This also gets the correct result
+         in case pwsh is an alias to powershell. -->
+    <Exec Command="pwsh -Version" IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="PowerShellCoreExitCode"/>
+    </Exec>
+
+    <!-- Select PowerShell executable. -->
+    <PropertyGroup Condition="'$(PowerShellCoreExitCode)' == '0'">
+      <PowerShellExecutable>pwsh</PowerShellExecutable>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(PowerShellCoreExitCode)' != '0'">
+      <PowerShellExecutable>powershell</PowerShellExecutable>
+    </PropertyGroup>
+
+    <Exec Command="$(PowerShellExecutable) -File $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
+          WorkingDirectory="$(PowerShellAnalyzersRootDirectory)"
+          IgnoreStandardErrorWarningFormat="$(PowerShellAnalyzersArguments.Contains('-ForGitHubAction'))"/>
+
+    <Touch Condition="'$(CreatePowerShellAnalyzersStampFile)' != 'false'"
+           Files="$(PowerShellAnalyzersStampFile)"
+           AlwaysCreate="true" />
+  </Target>
+
+</Project>

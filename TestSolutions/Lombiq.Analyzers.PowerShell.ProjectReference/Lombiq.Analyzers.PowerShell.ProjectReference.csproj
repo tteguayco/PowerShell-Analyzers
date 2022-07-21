@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\..\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.targets" />
+
+  <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="..\Violate-Analyzers.ps1" DestinationFolder="$(MSBuildThisFileDirectory)" />
+  </Target>
+
+</Project>

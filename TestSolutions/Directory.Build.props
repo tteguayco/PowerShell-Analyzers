@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- This is only needed for stuff in the TestSolutions directory because it is normally excluded exactly because it
+         has the intentional violations. -->
+    <PowerShellAnalyzersArguments>-ForMsBuild -IncludeTestSolutions</PowerShellAnalyzersArguments>
+  </PropertyGroup>
+</Project>

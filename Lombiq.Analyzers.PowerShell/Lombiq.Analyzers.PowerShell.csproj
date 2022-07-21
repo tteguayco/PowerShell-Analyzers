@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- This csproj file is only needed for NuGet package creation and to make the files visible in IDE. It doesn't
+       contain anything that needs to be built. -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+    <IsPublishable>false</IsPublishable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Lombiq PowerShell Analyzers</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2022, Lombiq Technologies Ltd.</Copyright>
+    <Description>Lombiq PowerShell Analyzers: PowerShell static code analysis via PSScriptAnalyzer (https://github.com/PowerShell/PSScriptAnalyzer) and Lombiq's recommended configuration for it. Integrated with GitHub Actions. See the project website for detailed documentation.</Description>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
+    <PackageTags>Lombiq;Powershell;MSBuild</PackageTags>
+    <RepositoryUrl>https://github.com/Lombiq/PowerShell-Analyzers</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/PowerShell-Analyzers</PackageProjectUrl>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="License.md" Pack="true" PackagePath="" />
+    <None Include="..\Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+    <None Include="Lombiq.Analyzers.PowerShell.targets" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.targets" />
+    <None Include="Lombiq.Analyzers.PowerShell.NuGet.props" Pack="true" PackagePath="build\Lombiq.Analyzers.PowerShell.props" />
+    <None Include="Invoke-Analyzer.ps1" Pack="true" PackagePath="" />
+    <None Include="PSScriptAnalyzerSettings.psd1" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

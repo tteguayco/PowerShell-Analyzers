@@ -1,0 +1,37 @@
+name: Test Analysis Failure
+
+# Runs for PRs opened for any branch, and pushes to the dev branch.
+on:
+  pull_request:
+  push:
+    branches:
+      - dev
+
+jobs:
+  call-test-analysis-failure-nuget:
+    name: Test Analysis Failure - NuGet PackageReference
+    uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@dev
+    with:
+      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.PackageReference
+      timeout-minutes: 30
+      build-expected-code-analysis-errors: |
+        MSB3073: The command exited with non-zero code.
+        PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
+        PSAvoidUsingCmdletAliases: 'echo' is an alias of 'Write-Output'.
+        PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
+        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
+
+  call-test-analysis-failure-local:
+    name: Test Analysis Failure - Local ProjectReference
+    uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@dev
+    with:
+      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.ProjectReference
+      timeout-minutes: 30
+      build-expected-code-analysis-errors: |
+        MSB3073: The command exited with non-zero code.
+        PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
+        PSAvoidUsingCmdletAliases: 'echo' is an alias of 'Write-Output'.
+        PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
+        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
