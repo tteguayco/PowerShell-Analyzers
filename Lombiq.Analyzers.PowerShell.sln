@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.Analyzers.PowerShell", "Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.csproj", "{8802AF0F-D4CA-4ABA-8408-F4433013FF7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.Analyzers.PowerShell", "Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.csproj", "{8802AF0F-D4CA-4ABA-8408-F4433013FF7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Workflows", "GitHub Workflows", "{A44B4000-AF9F-47DD-A785-4778B6179090}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\publish-nuget.yml = ..\.github\workflows\publish-nuget.yml
-		..\.github\workflows\test-analysis-failure.yml = ..\.github\workflows\test-analysis-failure.yml
-		..\.github\workflows\verify-submodule-pull-request.yml = ..\.github\workflows\verify-submodule-pull-request.yml
+		.github\workflows\publish-nuget.yml = .github\workflows\publish-nuget.yml
+		.github\workflows\test-analysis-failure.yml = .github\workflows\test-analysis-failure.yml
+		.github\workflows\verify-submodule-pull-request.yml = .github\workflows\verify-submodule-pull-request.yml
 	EndProjectSection
 EndProject
 Global
@@ -17,13 +17,16 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8802AF0F-D4CA-4ABA-8408-F4433013FF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8802AF0F-D4CA-4ABA-8408-F4433013FF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8802AF0F-D4CA-4ABA-8408-F4433013FF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8802AF0F-D4CA-4ABA-8408-F4433013FF7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4EC68381-6918-49B8-83EA-74C87E8AA97E}
 	EndGlobalSection
 EndGlobal
