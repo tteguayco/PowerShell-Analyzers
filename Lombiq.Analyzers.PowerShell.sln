@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.Analyzers.PowerShell
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Workflows", "GitHub Workflows", "{A44B4000-AF9F-47DD-A785-4778B6179090}"
 	ProjectSection(SolutionItems) = preProject
-		E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\publish-nuget.yml = E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\publish-nuget.yml
-		E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\test-analysis-failure.yml = E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\test-analysis-failure.yml
-		E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\verify-submodule-pull-request.yml = E:\aux_c\repositories\orchard-core\Open-Source-Orchard-Core-Extensions3\tools\Lombiq.Analyzers.PowerShell\.github\workflows\verify-submodule-pull-request.yml
+		..\.github\workflows\publish-nuget.yml = ..\.github\workflows\publish-nuget.yml
+		..\.github\workflows\test-analysis-failure.yml = ..\.github\workflows\test-analysis-failure.yml
+		..\.github\workflows\verify-submodule-pull-request.yml = ..\.github\workflows\verify-submodule-pull-request.yml
 	EndProjectSection
 EndProject
 Global
