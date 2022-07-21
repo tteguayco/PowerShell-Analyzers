@@ -74,6 +74,9 @@ Live analysis is outside of the scope of this project, however you can use the V
 
 Occasionally there is good reason to ignore an analyzer warning. In this case add the `[Diagnostics.CodeAnalysis.SuppressMessage('Rule Code', '', Justification = 'Explain reason.')]` attribute to the cmdlet's `param()`. For more information, see the module's [documentation](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/using-scriptanalyzer?view=ps-modules#suppressing-rules).
 
+Suppressing a specific line or range (like `#pragma warning disable` in C#) is not currently supported. See [the associated PSScriptAnalyzer issue](https://github.com/PowerShell/PSScriptAnalyzer/issues/849).
+
+
 ## Contributing and support
 
 Bug reports, feature requests, comments, questions, code contributions, and love letters are warmly welcome, please do so via GitHub issues and pull requests. Please adhere to our [open-source guidelines](https://lombiq.com/open-source-guidelines) while doing so.
