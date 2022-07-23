@@ -14,7 +14,7 @@ Do you want to quickly try out this project and see it in action? Check it out i
 
 ### Pre-requisites
 
-The *PSScriptAnalyzer* module must be installed. The script will attempt to auto-install it, however if this fails (e.g. on Windows PowerShell you have to be admin to install modules) follow the steps [here](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer).
+The _PSScriptAnalyzer_ module must be installed. The script will attempt to auto-install it, however if this fails (e.g. on Windows PowerShell you have to be admin to install modules) follow the steps [here](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer).
 
 Note that if you are usnig this in GitHub Actions, the common images (`windows-latest` and `ubuntu-latest`) already have it so you don't need to install anything.
 
@@ -28,11 +28,11 @@ Use the script like this to output the analyzer violations with `Write-Error`:
 ./Invoke-Analyzer.ps1 -SettingsPath PSScriptAnalyzerSettings.psd1
 ```
 
-The `-SettingsPath` can be omitted, in this case the *PSScriptAnalyzerSettings.psd1* in the same directory as the *Invoke-Analyzer.ps1* will be used.
+The `-SettingsPath` can be omitted, in this case the _PSScriptAnalyzerSettings.psd1_ in the same directory as the _Invoke-Analyzer.ps1_ will be used.
 
 #### GitHub Actions
 
-You can invoke it from an *action.yml* file like this:
+You can invoke it from an _action.yml_ file like this:
 
 ```yaml
     - name: Analyze PowerShell scripts
@@ -44,19 +44,19 @@ The `-ForGitHubAction` optional displays the results using [error workflow comma
 
 If you are using our `build-dotnet` action or build-related reusable workflows from [Lombiq GitHub Actions](https://github.com/Lombiq/GitHub-Actions), PowerShell linting is already included.
 
-Just set the value of the `powershell-analyzer-path` to the path of the *Invoke-Analyzer.ps1* file relative to your repository root. In case it's *./tools/Lombiq.Analyzers.PowerShell/Invoke-Analyzer.ps1* you don't need additional configuration.
+Just set the value of the `powershell-analyzer-path` to the path of the _Invoke-Analyzer.ps1_ file relative to your repository root. In case it's _./tools/Lombiq.Analyzers.PowerShell/Invoke-Analyzer.ps1_ you don't need additional configuration.
 
 #### MSBuild
 
 This way you associate the analyzer with a .NET project and MSBuild automatically invokes analysis before building. If the analysis passes, it creates a timestamp and won't perform the analysis again until a new script file has been added or an existing one modified.
 
-If this project is included via a submodule, edit the *csproj* file of your primary project(s) and add the following:
+If this project is included via a submodule, edit the _csproj_ file of your primary project(s) and add the following:
 
 ```xml
 <Import Project="path\to\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell.targets" />
 ```
 
-You don't need to `<ProjectReference>` *Lombiq.Analyzers.PowerShell.csproj*.
+You don't need to `<ProjectReference>` _Lombiq.Analyzers.PowerShell.csproj_.
 
 If you include the project as a NuGet package, it will work as-is.
 
@@ -71,7 +71,7 @@ Live analysis is outside of the scope of this project, however you can use the V
 
 1. Install it from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell).
 2. Go to Settings and paste `powershell.scriptAnalysis.settingsPath` into the search bar.
-3. Set it to the path of the *PSScriptAnalyzerSettings.psd1* file to use our settings.
+3. Set it to the path of the _PSScriptAnalyzerSettings.psd1_ file to use our settings.
 
 ### Suppressing PSScriptAnalyzer rules
 
