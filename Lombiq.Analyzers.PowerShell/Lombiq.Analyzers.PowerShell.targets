@@ -34,14 +34,19 @@
       <PowerShellExecutable>pwsh</PowerShellExecutable>
     </PropertyGroup>
     <PropertyGroup Condition="'$(PowerShellCoreExitCode)' != '0'">
-      <PowerShellExecutable>powershell</PowerShellExecutable>
+      <PowerShellExecutable Condition="$([MSBuild]::IsOSUnixLike())">-</PowerShellExecutable>
+      <PowerShellExecutable Condition="!$([MSBuild]::IsOSUnixLike())">powershell</PowerShellExecutable>
     </PropertyGroup>
 
-    <Exec Command="$(PowerShellExecutable) -File $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
+    <Exec Condition="'$(PowerShellExecutable)' != '-'"
+          Command="$(PowerShellExecutable) -File $(PowerShellAnalyzersScriptDirectory)Invoke-Analyzer.ps1 $(PowerShellAnalyzersArguments)"
           WorkingDirectory="$(PowerShellAnalyzersRootDirectory)"
           IgnoreStandardErrorWarningFormat="$(PowerShellAnalyzersArguments.Contains('-ForGitHubAction'))"/>
+    <Warning Condition="'$(PowerShellExecutable)' == '-'"
+             Text="Commands &quot;pwsh&quot; or &quot;powershell&quot; were not found! Please install PowerShell (see https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell)."
+             Code="PsNotInstalled" />
 
-    <Touch Condition="'$(CreatePowerShellAnalyzersStampFile)' != 'false'"
+    <Touch Condition="'$(CreatePowerShellAnalyzersStampFile)' != 'false' AND '$(PowerShellExecutable)' != '-'"
            Files="$(PowerShellAnalyzersStampFile)"
            AlwaysCreate="true" />
   </Target>
