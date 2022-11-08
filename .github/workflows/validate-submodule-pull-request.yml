@@ -1,4 +1,4 @@
-name: Validat e Pull Request
+name: Validate Pull Request
 
 on:
   pull_request:
