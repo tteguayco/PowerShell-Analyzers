@@ -89,12 +89,18 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
     }
 }
 
+$analyzerParameters = @{
+    "Settings"              = $SettingsPath.FullName
+    "CustomRulePath"        = Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path -Parent) -ChildPath Rules
+    "RecurseCustomRulePath" = $true
+    "IncludeDefaultRules"   = $true
+}
 $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
     Where-Object { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
             $PSItem.Name -eq 'Violate-Analyzers.ps1' -and
             ($PSItem.Directory.Name -eq 'TestSolutions' -or $PSItem.Directory.Parent.Name -eq 'TestSolutions')) } |
-    ForEach-Object { Invoke-ScriptAnalyzer -Path $PSItem.FullName -Settings $SettingsPath.FullName } |
+    ForEach-Object { Invoke-ScriptAnalyzer -Path $PSItem.FullName @analyzerParameters } |
     # Only Warning and above (ignore "Information" type results).
     Where-Object { $PSItem.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
 
