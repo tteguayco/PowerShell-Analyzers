@@ -9,11 +9,4 @@
         # resolved.
         'PSReviewUnusedParameter'
     )
-    'Rules' =
-    @{
-        'PSAvoidUsingCmdletAliases' =
-        @{
-            'allowlist' = @('%', '?')
-        }
-    }
 }
