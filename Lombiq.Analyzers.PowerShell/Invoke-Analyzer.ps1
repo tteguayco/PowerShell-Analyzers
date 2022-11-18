@@ -1,4 +1,4 @@
-param(
+﻿param(
     $SettingsPath = (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'PSScriptAnalyzerSettings.psd1'),
     [Switch] $ForGitHubActions,
     [Switch] $ForMsBuild,
@@ -25,7 +25,7 @@ function Find-Recursively([string] $Path = '.', [string[]] $IncludeFile, [string
         foreach ($child in (Get-ChildItem $Here.FullName -Force))
         {
             if ($child -is [System.IO.DirectoryInfo]) { Find-Inner $child }
-            elseif (($IncludeFile | ? { $child.name -like $_ }).Count) { $child }
+            elseif (($IncludeFile | Where-Object { $child.name -like $_ }).Count) { $child }
         }
     }
 
@@ -89,13 +89,13 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
 }
 
 $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
-    ? { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
+    Where-Object { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
             $_.Name -eq 'Violate-Analyzers.ps1' -and
             ($_.Directory.Name -eq 'TestSolutions' -or $_.Directory.Parent.Name -eq 'TestSolutions')) } |
-    % { Invoke-ScriptAnalyzer $_.FullName -Settings $SettingsPath.FullName } |
+    ForEach-Object { Invoke-ScriptAnalyzer $_.FullName -Settings $SettingsPath.FullName } |
     # Only Warning and above (ignore "Information" type results).
-    ? { $_.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
+    Where-Object { $_.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
 
 foreach ($result in $results)
 {
