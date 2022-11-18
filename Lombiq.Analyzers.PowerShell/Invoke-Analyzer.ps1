@@ -5,10 +5,11 @@
     [Switch] $IncludeTestSolutions
 )
 
-# This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } but
-# much faster. For example, this is relevant for ignoring node_modules.
+# This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $PSItem.FullName -notlike "*\$ExcludeDirectory\*" }
+# but much faster. For example, this is relevant for ignoring node_modules.
 # - Measure-Command { Find-Recursively -Path . -IncludeFile *.ps1 -ExcludeDirectory node_modules } => 3.83s
-# - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } } => 111.27s
+# - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $PSItem.FullName -notlike
+#   "*\$ExcludeDirectory\*" } } => 111.27s
 function Find-Recursively([string] $Path = '.', [string[]] $IncludeFile, [string] $ExcludeDirectory)
 {
     $ExcludeDirectory = $ExcludeDirectory.ToUpperInvariant()
@@ -25,7 +26,7 @@ function Find-Recursively([string] $Path = '.', [string[]] $IncludeFile, [string
         foreach ($child in (Get-ChildItem $Here.FullName -Force))
         {
             if ($child -is [System.IO.DirectoryInfo]) { Find-Inner $child }
-            elseif (($IncludeFile | Where-Object { $child.name -like $_ }).Count) { $child }
+            elseif (($IncludeFile | Where-Object { $child.name -like $PSItem }).Count) { $child }
         }
     }
 
@@ -91,11 +92,11 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
 $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
     Where-Object { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
-            $_.Name -eq 'Violate-Analyzers.ps1' -and
-            ($_.Directory.Name -eq 'TestSolutions' -or $_.Directory.Parent.Name -eq 'TestSolutions')) } |
-    ForEach-Object { Invoke-ScriptAnalyzer $_.FullName -Settings $SettingsPath.FullName } |
+            $PSItem.Name -eq 'Violate-Analyzers.ps1' -and
+            ($PSItem.Directory.Name -eq 'TestSolutions' -or $PSItem.Directory.Parent.Name -eq 'TestSolutions')) } |
+    ForEach-Object { Invoke-ScriptAnalyzer -Path $PSItem.FullName -Settings $SettingsPath.FullName } |
     # Only Warning and above (ignore "Information" type results).
-    Where-Object { $_.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
+    Where-Object { $PSItem.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
 
 foreach ($result in $results)
 {
