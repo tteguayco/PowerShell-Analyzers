@@ -2,7 +2,8 @@
     $SettingsPath = (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'PSScriptAnalyzerSettings.psd1'),
     [Switch] $ForGitHubActions,
     [Switch] $ForMsBuild,
-    [Switch] $IncludeTestSolutions
+    [Switch] $IncludeTestSolutions,
+    [switch] $Fix
 )
 
 # This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $PSItem.FullName -notlike "*\$ExcludeDirectory\*" }
@@ -94,6 +95,7 @@ $analyzerParameters = @{
     "CustomRulePath"        = Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path -Parent) -ChildPath Rules
     "RecurseCustomRulePath" = $true
     "IncludeDefaultRules"   = $true
+    "Fix"                   = $Fix
 }
 $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
     Where-Object { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
