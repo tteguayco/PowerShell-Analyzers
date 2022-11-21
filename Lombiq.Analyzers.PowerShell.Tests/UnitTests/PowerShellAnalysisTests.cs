@@ -51,6 +51,7 @@ public class PowerShellAnalysisTests
 
     private static void MessageShouldContainViolationCodes(string message)
     {
+        message.ShouldContain("PSAvoidAutomaticVariableAlias");
         message.ShouldContain("PSAvoidUsingEmptyCatchBlock");
         message.ShouldContain("PSAvoidUsingCmdletAliases");
         message.ShouldContain("PSUseApprovedVerbs");
