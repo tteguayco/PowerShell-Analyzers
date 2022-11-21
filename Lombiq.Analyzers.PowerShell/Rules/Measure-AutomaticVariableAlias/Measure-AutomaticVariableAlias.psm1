@@ -11,7 +11,7 @@
 .OUTPUTS
     [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord[]]
 .NOTES
-    Copied from
+    Copied (and modified version of)
     https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1#L613.
 #>
 function Measure-AutomaticVariableAlias
@@ -32,27 +32,25 @@ function Measure-AutomaticVariableAlias
 
         try
         {
-            # Finds the usages of the alias ($_) of the automatic variable ($PSItem).
-            $lcTokens = $Token | Where-Object { $PSItem.GetType().Name -eq "VariableToken" -and $PSItem.Name -eq "_" }
-
-            foreach ($lcToken in $lcTokens)
+            # Filter down tokens to just variable tokens with the name "_".
+            foreach ($automaticVariableAliasToken in $Token | Where-Object { $PSItem.GetType().Name -eq "VariableToken" -and $PSItem.Name -eq "_" })
             {
                 $correctionTypeName = "Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.CorrectionExtent"
                 $correctionExtent = New-Object -TypeName $correctionTypeName -ArgumentList @(
-                    $lcToken.Extent.StartLineNumber
-                    $lcToken.Extent.EndLineNumber
-                    $lcToken.Extent.StartColumnNumber
-                    $lcToken.Extent.EndColumnNumber
+                    $automaticVariableAliasToken.Extent.StartLineNumber
+                    $automaticVariableAliasToken.Extent.EndLineNumber
+                    $automaticVariableAliasToken.Extent.StartColumnNumber
+                    $automaticVariableAliasToken.Extent.EndColumnNumber
                     "`$PSItem"
-                    "Replaced the alias of the automatic variable (`$_) with `"`$PSItem`"."
+                    "Replaced the alias of the automatic variable `"`$_`" with `"`$PSItem`"."
                 )
 
                 $suggestedCorrections = New-Object System.Collections.ObjectModel.Collection[$correctionTypeName]
                 $suggestedCorrections.add($correctionExtent) | Out-Null
 
                 $results += [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord]@{
-                    "Message"              = "Use the full name of the automatic variable (`$PSItem) instead of `"`$_`"!"
-                    "Extent"               = $lcToken.Extent
+                    "Message"              = "Use the full name of the automatic variable `"`$PSItem`" instead of `"`$_`"!"
+                    "Extent"               = $automaticVariableAliasToken.Extent
                     "RuleName"             = $PSCmdlet.MyInvocation.InvocationName
                     "Severity"             = "Warning"
                     "RuleSuppressionID"    = "PSAvoidAutomaticVariableAlias"
