@@ -42,7 +42,7 @@ function Measure-AutomaticVariableAlias
                     $automaticVariableAliasToken.Extent.StartColumnNumber
                     $automaticVariableAliasToken.Extent.EndColumnNumber
                     "`$PSItem"
-                    "Replaced the alias of the automatic variable '`$' with '`$PSItem'."
+                    "Replaced the alias of the automatic variable '`$_' with '`$PSItem'."
                 )
 
                 $suggestedCorrections = New-Object System.Collections.ObjectModel.Collection[$correctionTypeName]
@@ -50,7 +50,7 @@ function Measure-AutomaticVariableAlias
 
                 $results += [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord]@{
                     "Extent"               = $automaticVariableAliasToken.Extent
-                    "Message"              = "Use the full name of the automatic variable '`$PSItem' instead of '`$_'!"
+                    "Message"              = "'`$_' is an alias of '`$PSItem'."
                     "RuleName"             = "PSAvoidUsingAutomaticVariableAlias"
                     "RuleSuppressionID"    = "PSAvoidUsingAutomaticVariableAlias"
                     "Severity"             = "Warning"

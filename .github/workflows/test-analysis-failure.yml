@@ -17,6 +17,7 @@ jobs:
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
         MSB3073: The command exited with non-zero code.
+        PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
         PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
         PSAvoidUsingCmdletAliases: 'echo' is an alias of 'Write-Output'.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
@@ -31,6 +32,7 @@ jobs:
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
         MSB3073: The command exited with non-zero code.
+        PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
         PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
         PSAvoidUsingCmdletAliases: 'echo' is an alias of 'Write-Output'.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
