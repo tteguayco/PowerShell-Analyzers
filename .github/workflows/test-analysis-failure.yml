@@ -17,6 +17,7 @@ jobs:
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
         MSB3073: The command exited with non-zero code.
+        MSB3075
         PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
         PSAvoidUsingCmdletAliases: '%' is an alias of 'ForEach-Object'.
         PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
@@ -32,6 +33,7 @@ jobs:
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
         MSB3073: The command exited with non-zero code.
+        MSB3075
         PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
         PSAvoidUsingCmdletAliases: '%' is an alias of 'ForEach-Object'.
         PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
