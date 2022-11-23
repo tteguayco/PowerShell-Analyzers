@@ -112,4 +112,7 @@ foreach ($result in $results)
     Write-FileError -Path $result.ScriptPath -Line $result.Line -Column $result.Column $message
 }
 
-exit $results.Count
+# Exit code indicates the existence of analyzer violations instead of the number of violations, because exiting with
+# code 5 (when there are 5 violations) changes how MSBuild interprets the results and yields the error MSB3075 instead
+# of MSB3073 for some reason.
+exit $results.Count -eq 0 ? 0 : 1
