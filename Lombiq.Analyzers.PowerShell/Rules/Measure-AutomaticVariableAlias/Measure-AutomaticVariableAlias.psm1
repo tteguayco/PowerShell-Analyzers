@@ -1,9 +1,8 @@
 ﻿<#
 .SYNOPSIS
-    Replaces usages of the alias of the automatic variable ($_) with its original form ($PSItem).
+    Detects the usages of the alias ($_) of the automatic variable ($PSItem) and suggests to correct them.
 .DESCRIPTION
-    Replaces usages of the alias of the automatic variable ($_) with its original form ($PSItem), similarly to the
-    AvoidUsingCmdletAliases rule.
+    The full name of the automatic variable ($PSItem) should be used instead of its alias ($_) for consistency.
 .EXAMPLE
     Measure-AutomaticVariableAlias -Token $Token
 .INPUTS
