@@ -11,7 +11,7 @@
 .OUTPUTS
     [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord[]]
 .NOTES
-    Copied (and modified version of)
+    Copied (and modified) version of
     https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1#L613.
 #>
 function Measure-AutomaticVariableAlias
