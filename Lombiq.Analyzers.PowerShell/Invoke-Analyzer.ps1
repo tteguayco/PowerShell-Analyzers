@@ -115,4 +115,7 @@ foreach ($result in $results)
 # Exit code indicates the existence of analyzer violations instead of the number of violations, because exiting with
 # code 5 (when there are 5 violations) changes how MSBuild interprets the results and yields the error MSB3075 instead
 # of MSB3073 for some reason.
-exit $results.Count -eq 0 ? 0 : 1
+if ($results.Count -ne 0)
+{
+    exit 1
+}
