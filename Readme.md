@@ -80,6 +80,11 @@ Occasionally there is good reason to ignore an analyzer warning. In this case ad
 
 Suppressing a specific line or range (like `#pragma warning disable` in C#) is not currently supported. See [the associated PSScriptAnalyzer issue](https://github.com/PowerShell/PSScriptAnalyzer/issues/849).
 
+### Implementing custom analyzer rules
+
+Check out [the official documentation](https://learn.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/create-custom-rule) for instructions and [CommunityAnalyzerRules](https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1) for additional inspiration.
+Custom rule modules should be placed in the `Lombiq.Analyzers.PowerShell\Rules` folder to be automatically detected by the `Invoke-Analyzer` script.
+
 ## Contributing and support
 
 Bug reports, feature requests, comments, questions, code contributions and love letters are warmly welcome. You can send them to us via GitHub issues and pull requests. Please adhere to our [open-source guidelines](https://lombiq.com/open-source-guidelines) while doing so.
