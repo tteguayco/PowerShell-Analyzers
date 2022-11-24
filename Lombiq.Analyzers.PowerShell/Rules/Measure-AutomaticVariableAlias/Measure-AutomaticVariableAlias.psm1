@@ -1,8 +1,8 @@
 ﻿<#
 .SYNOPSIS
-    Detects the usages of the alias ($_) of the automatic variable ($PSItem) and suggests to correct them.
+    Detects the usages of the alias $_ of the automatic variable $PSItem and suggests to correct them.
 .DESCRIPTION
-    The full name of the automatic variable ($PSItem) should be used instead of its alias ($_) for consistency.
+    The full name of the automatic variable $PSItem should be used instead of its alias $_ for consistency.
 .EXAMPLE
     Measure-AutomaticVariableAlias -Token $Token
 .INPUTS
