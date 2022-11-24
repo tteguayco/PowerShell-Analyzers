@@ -1,14 +1,16 @@
-param(
+﻿param(
     $SettingsPath = (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'PSScriptAnalyzerSettings.psd1'),
     [Switch] $ForGitHubActions,
     [Switch] $ForMsBuild,
-    [Switch] $IncludeTestSolutions
+    [Switch] $IncludeTestSolutions,
+    [switch] $Fix
 )
 
-# This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } but
-# much faster. For example, this is relevant for ignoring node_modules.
+# This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $PSItem.FullName -notlike "*\$ExcludeDirectory\*" }
+# but much faster. For example, this is relevant for ignoring node_modules.
 # - Measure-Command { Find-Recursively -Path . -IncludeFile *.ps1 -ExcludeDirectory node_modules } => 3.83s
-# - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $_.FullName -notlike "*\$ExcludeDirectory\*" } } => 111.27s
+# - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $PSItem.FullName -notlike
+#   "*\$ExcludeDirectory\*" } } => 111.27s
 function Find-Recursively([string] $Path = '.', [string[]] $IncludeFile, [string] $ExcludeDirectory)
 {
     $ExcludeDirectory = $ExcludeDirectory.ToUpperInvariant()
@@ -25,7 +27,7 @@ function Find-Recursively([string] $Path = '.', [string[]] $IncludeFile, [string
         foreach ($child in (Get-ChildItem $Here.FullName -Force))
         {
             if ($child -is [System.IO.DirectoryInfo]) { Find-Inner $child }
-            elseif (($IncludeFile | ? { $child.name -like $_ }).Count) { $child }
+            elseif (($IncludeFile | Where-Object { $child.name -like $PSItem }).Count) { $child }
         }
     }
 
@@ -88,14 +90,21 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
     }
 }
 
+$analyzerParameters = @{
+    "Settings"              = $SettingsPath.FullName
+    "CustomRulePath"        = Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path -Parent) -ChildPath Rules
+    "RecurseCustomRulePath" = $true
+    "IncludeDefaultRules"   = $true
+    "Fix"                   = $Fix
+}
 $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
-    ? { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
+    Where-Object { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
-            $_.Name -eq 'Violate-Analyzers.ps1' -and
-            ($_.Directory.Name -eq 'TestSolutions' -or $_.Directory.Parent.Name -eq 'TestSolutions')) } |
-    % { Invoke-ScriptAnalyzer $_.FullName -Settings $SettingsPath.FullName } |
+            $PSItem.Name -eq 'Violate-Analyzers.ps1' -and
+            ($PSItem.Directory.Name -eq 'TestSolutions' -or $PSItem.Directory.Parent.Name -eq 'TestSolutions')) } |
+    ForEach-Object { Invoke-ScriptAnalyzer -Path $PSItem.FullName @analyzerParameters } |
     # Only Warning and above (ignore "Information" type results).
-    ? { $_.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
+    Where-Object { $PSItem.Severity -ge [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticSeverity]::Warning }
 
 foreach ($result in $results)
 {
@@ -103,4 +112,10 @@ foreach ($result in $results)
     Write-FileError -Path $result.ScriptPath -Line $result.Line -Column $result.Column $message
 }
 
-exit $results.Count
+# Exit code indicates the existence of analyzer violations instead of the number of violations, because exiting with
+# code 5 (when there are 5 violations) changes how MSBuild interprets the results and yields the error MSB3075 instead
+# of MSB3073 for some reason.
+if ($results.Count -ne 0)
+{
+    exit 1
+}
