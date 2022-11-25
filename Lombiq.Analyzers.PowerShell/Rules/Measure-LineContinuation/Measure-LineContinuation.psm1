@@ -1,20 +1,22 @@
 <#
 .SYNOPSIS
-    Removes backticks from your script and use "splatting" instead.
+    Detects the usages of the backtick (line continuation) character.
 .DESCRIPTION
-    In general, the community feels you should avoid using those backticks as “line continuation characters” when possible.
-    They’re hard to read, easy to miss, and easy to mis-type. Also, if you add an extra whitespace after the backtick in the above example, then the command won’t work.
-    To fix a violation of this rule, please remove backticks from your script and use "splatting" instead. You can run "Get-Help about_splatting" to get more details.
+    In general, the community feels you should avoid using those backticks as "line continuation characters" when
+    possible. They are hard to read, and easy to miss and mistype. Also, adding an extra whitespace after the backtick
+    breaks the command execution. To fix a violation of this rule, please remove backticks from your script and use
+    parameter splatting instead. You can run "Get-Help about_splatting" to get more details.
 .EXAMPLE
-    Measure-Backtick -Token $Token
+    Measure-LineContinuation -Token $Token
 .INPUTS
     [System.Management.Automation.Language.Token[]]
 .OUTPUTS
     [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord[]]
 .NOTES
-    Reference: Document nested structures, Windows PowerShell Best Practices.
+    Copied (and improved) version of
+    https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1#L613.
 #>
-function Measure-Backtick
+function Measure-LineContinuation
 {
     [CmdletBinding()]
     [OutputType([Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord[]])]
@@ -32,16 +34,17 @@ function Measure-Backtick
 
         try
         {
-            # Finds LineContinuation tokens
-            $lcTokens = $Token | Where-Object {$PSItem.Kind -eq [System.Management.Automation.Language.TokenKind]::LineContinuation}
-
-            foreach ($lcToken in $lcTokens)
+            foreach ($lineContinuationToken in $Token
+                | Where-Object { $PSItem.Kind -eq [System.Management.Automation.Language.TokenKind]::LineContinuation })
             {
-                $result = New-Object `
-                            -Typename "Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticRecord" `
-                            -ArgumentList $Messages.MeasureBacktick,$lcToken.Extent,$PSCmdlet.MyInvocation.InvocationName,Warning,$null
-
-                $results += $result
+                $results += [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord]@{
+                    "Extent"               = $lineContinuationToken.Extent
+                    "Message"              = 'Using backtick (line continuation) makes the code harder to read and' +
+                    ' maintain. Please consider using parameter splatting instead.'
+                    "RuleName"             = "PSAvoidUsingLineContinuation"
+                    "RuleSuppressionID"    = "PSAvoidUsingLineContinuation"
+                    "Severity"             = "Warning"
+                }
             }
 
             return $results
