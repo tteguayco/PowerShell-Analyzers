@@ -91,11 +91,11 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
 }
 
 $analyzerParameters = @{
-    "Settings"              = $SettingsPath.FullName
-    "CustomRulePath"        = Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path -Parent) -ChildPath Rules
+    "Settings" = $SettingsPath.FullName
+    "CustomRulePath" = Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path -Parent) -ChildPath Rules
     "RecurseCustomRulePath" = $true
-    "IncludeDefaultRules"   = $true
-    "Fix"                   = $Fix
+    "IncludeDefaultRules" = $true
+    "Fix" = $Fix
 }
 $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
     Where-Object { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
