@@ -23,9 +23,9 @@ jobs:
       - name: Windows PowerShell Static Code Analysis (Windows-only)
         if: runner.os == 'Windows'
         shell: powershell
-        run: .\Utility\tools\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
+        run: .\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
 
       - name: PowerShell 7+ Static Code Analysis
         if: always() # Even if the above fails, let's check both.
         shell: pwsh
-        run: .\Utility\tools\Lombiq.Analyzers.PowerShell\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
+        run: .\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
