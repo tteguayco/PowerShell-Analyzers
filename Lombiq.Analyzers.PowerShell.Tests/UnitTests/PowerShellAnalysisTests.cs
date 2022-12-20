@@ -54,6 +54,7 @@ public class PowerShellAnalysisTests
         message.ShouldContain("PSAvoidUsingAutomaticVariableAlias");
         message.ShouldContain("PSAvoidUsingCmdletAliases");
         message.ShouldContain("PSAvoidUsingEmptyCatchBlock");
+        message.ShouldContain("PSAvoidUsingLineContinuation");
         message.ShouldContain("PSUseApprovedVerbs");
         message.ShouldContain("PSUseSingularNouns");
     }

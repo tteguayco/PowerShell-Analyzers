@@ -12,7 +12,7 @@ jobs:
     name: Test Analysis Failure - NuGet PackageReference
     uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@dev
     with:
-      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      machine-types: "['ubuntu-latest', 'windows-latest']"
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.PackageReference
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
@@ -20,6 +20,7 @@ jobs:
         PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
         PSAvoidUsingCmdletAliases: '%' is an alias of 'ForEach-Object'.
         PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
+        PSAvoidUsingLineContinuation: Using backtick (line continuation) makes the code harder to read and maintain.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
         PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
 
@@ -27,7 +28,7 @@ jobs:
     name: Test Analysis Failure - Local ProjectReference
     uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@dev
     with:
-      machine-types: "[\"ubuntu-latest\", \"windows-latest\"]"
+      machine-types: "['ubuntu-latest', 'windows-latest']"
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.ProjectReference
       timeout-minutes: 30
       build-expected-code-analysis-errors: |
@@ -35,5 +36,6 @@ jobs:
         PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
         PSAvoidUsingCmdletAliases: '%' is an alias of 'ForEach-Object'.
         PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
+        PSAvoidUsingLineContinuation: Using backtick (line continuation) makes the code harder to read and maintain.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
         PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.

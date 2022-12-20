@@ -10,8 +10,7 @@
 .OUTPUTS
     [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord[]]
 .NOTES
-    Copied (and modified) version of
-    https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1#L613.
+    Inspired by https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1#L613.
 #>
 function Measure-AutomaticVariableAlias
 {
@@ -48,12 +47,12 @@ function Measure-AutomaticVariableAlias
                 $suggestedCorrections.add($correctionExtent) | Out-Null
 
                 $results += [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord]@{
-                    "Extent"               = $automaticVariableAliasToken.Extent
-                    "Message"              = '''$_'' is an alias of the automatic variable ''$PSItem''. Please consider using the full name of this' +
+                    "Extent" = $automaticVariableAliasToken.Extent
+                    "Message" = '''$_'' is an alias of the automatic variable ''$PSItem''. Please consider using the full name of this' +
                     ' variable for consistency.'
-                    "RuleName"             = "PSAvoidUsingAutomaticVariableAlias"
-                    "RuleSuppressionID"    = "PSAvoidUsingAutomaticVariableAlias"
-                    "Severity"             = "Warning"
+                    "RuleName" = "PSAvoidUsingAutomaticVariableAlias"
+                    "RuleSuppressionID" = "PSAvoidUsingAutomaticVariableAlias"
+                    "Severity" = "Warning"
                     "SuggestedCorrections" = $suggestedCorrections
                 }
             }

@@ -5,4 +5,5 @@ function Violate-Analyzers()
 
 try { Violate-Analyzers } catch { }
 
-Get-ChildItem . | % { $_ }
+"Lombiq", `
+"Orchard", "Hastlayer" | % { $_ }
