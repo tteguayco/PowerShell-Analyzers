@@ -82,8 +82,7 @@ Suppressing a specific line or range (like `#pragma warning disable` in C#) is n
 
 ### Implementing custom analyzer rules
 
-Check out [the official documentation](https://learn.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/create-custom-rule) for instructions and [CommunityAnalyzerRules](https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1) for additional inspiration.
-Custom rule modules should be placed in the `Lombiq.Analyzers.PowerShell\Rules` folder to be automatically detected by the `Invoke-Analyzer` script.
+Check out [the official documentation](https://learn.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/create-custom-rule) for instructions and [CommunityAnalyzerRules](https://github.com/PowerShell/PSScriptAnalyzer/blob/master/Tests/Engine/CommunityAnalyzerRules/CommunityAnalyzerRules.psm1) for additional inspiration. Custom rule modules should be placed in the `Lombiq.Analyzers.PowerShell\Rules` folder to be automatically detected by the `Invoke-Analyzer` script.
 
 ## Contributing and support
 
