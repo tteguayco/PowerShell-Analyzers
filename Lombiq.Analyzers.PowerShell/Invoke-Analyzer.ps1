@@ -1,4 +1,16 @@
-﻿param(
+﻿[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'ForGitHubActions',
+    Justification = 'False positive due to https://github.com/PowerShell/PSScriptAnalyzer/issues/1472.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'ForMsBuild',
+    Justification = 'False positive due to https://github.com/PowerShell/PSScriptAnalyzer/issues/1472.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'IncludeTestSolutions',
+    Justification = 'False positive due to https://github.com/PowerShell/PSScriptAnalyzer/issues/1472.')]
+param(
     $SettingsPath = (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'PSScriptAnalyzerSettings.psd1'),
     [Switch] $ForGitHubActions,
     [Switch] $ForMsBuild,
