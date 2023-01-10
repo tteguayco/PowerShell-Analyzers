@@ -36,7 +36,7 @@
             CheckPipe = $true
             CheckPipeForRedundantWhitespace = $true
             CheckSeparator = $true
-            CheckParameter = $true
+            CheckParameter = $false
             IgnoreAssignmentOperatorInsideHashTable = $false
         }
         PSUseCorrectCasing = @{
