@@ -31,7 +31,7 @@
             Enable = $true
             CheckInnerBrace = $true
             CheckOpenBrace = $true
-            CheckOpenParent = $true
+            CheckOpenParen = $true
             CheckOperator = $true
             CheckPipe = $true
             CheckPipeForRedundantWhitespace = $true
