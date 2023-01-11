@@ -7,6 +7,18 @@ on:
     branches:
       - dev
 
+env:
+  EXPECTED_CODE_ANALYSIS_ERRORS: |
+    MSB3073: The command exited with non-zero code.
+    PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
+    PSAvoidUsingCmdletAliases: '%' is an alias of 'ForEach-Object'.
+    PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
+    PSAvoidUsingLineContinuation: Using backtick (line continuation) makes the code harder to read and maintain.
+    PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
+    PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
+    PSAvoidUsingWriteHost: File 'Violate-Analyzers.ps1' uses Write-Host.
+    PSUseConsistentIndentation: Indentation not consistent
+
 jobs:
   call-test-analysis-failure-nuget:
     if: false
@@ -16,16 +28,7 @@ jobs:
       machine-types: "['ubuntu-latest', 'windows-latest']"
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.PackageReference
       timeout-minutes: 30
-      build-expected-code-analysis-errors: |
-        MSB3073: The command exited with non-zero code.
-        PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
-        PSAvoidUsingCmdletAliases: '%' is an alias of 'ForEach-Object'.
-        PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
-        PSAvoidUsingLineContinuation: Using backtick (line continuation) makes the code harder to read and maintain.
-        PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
-        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
-        PSAvoidUsingWriteHost: File 'Violate-Analyzers.ps1' uses Write-Host.
-        PSUseConsistentIndentation: Indentation not consistent
+      build-expected-code-analysis-errors: ${{ env.EXPECTED_CODE_ANALYSIS_ERRORS }}
 
   call-test-analysis-failure-local:
     name: Test Analysis Failure - Local ProjectReference
@@ -34,13 +37,4 @@ jobs:
       machine-types: "['ubuntu-latest', 'windows-latest']"
       build-directory: TestSolutions/Lombiq.Analyzers.PowerShell.ProjectReference
       timeout-minutes: 30
-      build-expected-code-analysis-errors: |
-        MSB3073: The command exited with non-zero code.
-        PSAvoidUsingAutomaticVariableAlias: '$_' is an alias of '$PSItem'.
-        PSAvoidUsingCmdletAliases: '%' is an alias of 'ForEach-Object'.
-        PSAvoidUsingEmptyCatchBlock: Empty catch block is used.
-        PSAvoidUsingLineContinuation: Using backtick (line continuation) makes the code harder to read and maintain.
-        PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
-        PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
-        PSAvoidUsingWriteHost: File 'Violate-Analyzers.ps1' uses Write-Host.
-        PSUseConsistentIndentation: Indentation not consistent
+      build-expected-code-analysis-errors: ${{ env.EXPECTED_CODE_ANALYSIS_ERRORS }}
