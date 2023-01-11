@@ -1,6 +1,6 @@
 function Violate-Analyzers()
 {
-    "This file is intended to verify that PSScriptAnalyzer works and contains intentionally bad code."
+    Write-Host "This file is intended to verify that PSScriptAnalyzer works and contains intentionally bad code."
 }
 
 try { Violate-Analyzers } catch { }
