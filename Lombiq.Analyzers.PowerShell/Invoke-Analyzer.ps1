@@ -57,7 +57,7 @@ function Write-FileError([string] $Message, [string] $Path, [int] $Line = 0, [in
     }
     elseif ($ForMsBuild)
     {
-        if (-not $Message.Contains(":")) { $Message = ": $Message" }
+        if (-not $Message.Contains(':')) { $Message = ": $Message" }
 
         if ($Path)
         {
@@ -84,7 +84,7 @@ else
     exit -1
 }
 
-$installVersion = "1.21.0"
+$installVersion = '1.21.0'
 if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version -ne [Version]$installVersion)
 {
     try
@@ -94,10 +94,10 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
     }
     catch
     {
-        $infoUrl = "https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer"
-        Write-FileError ("Unable to detect Invoke-ScriptAnalyzer and failed to install PSScriptAnalyzer. If you " +
-            "are on Windows Powershell, open an administrator shell and type `"Install-Module -Name " +
-            "PSScriptAnalyzer -Force -RequiredVersion $installVersion`". Otherwise see $infoUrl to learn more.")
+        $infoUrl = 'https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer'
+        Write-FileError ('Unable to detect Invoke-ScriptAnalyzer and failed to install PSScriptAnalyzer. If you are' +
+            'on Windows Powershell, open an administrator shell and type "Install-Module -Name PSScriptAnalyzer' +
+            " -Force -RequiredVersion $installVersion`". Otherwise see $infoUrl to learn more.")
         exit -2
     }
 }
@@ -109,7 +109,7 @@ $analyzerParameters = @{
     IncludeDefaultRules = $true
     Fix = $Fix
 }
-$results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDirectory node_modules |
+$results = Find-Recursively -IncludeFile '*.ps1', '*.psm1', '*.psd1' -ExcludeDirectory node_modules |
     Where-Object { # Exclude /TestSolutions/Violate-Analyzers.ps1 and /TestSolutions/*/Violate-Analyzers.ps1
         $IncludeTestSolutions -or -not (
             $PSItem.Name -eq 'Violate-Analyzers.ps1' -and
@@ -118,7 +118,7 @@ $results = Find-Recursively -IncludeFile "*.ps1", "*.psm1", "*.psd1" -ExcludeDir
 
 foreach ($result in $results)
 {
-    $message = $result.RuleName + ": " + $result.Message
+    $message = $result.RuleName + ': ' + $result.Message
     Write-FileError -Path $result.ScriptPath -Line $result.Line -Column $result.Column $message
 }
 

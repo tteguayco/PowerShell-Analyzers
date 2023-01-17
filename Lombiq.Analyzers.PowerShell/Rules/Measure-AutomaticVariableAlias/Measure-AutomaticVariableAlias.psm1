@@ -31,29 +31,29 @@ function Measure-AutomaticVariableAlias
         try
         {
             # Filter down tokens to just variable tokens with the name "_".
-            foreach ($automaticVariableAliasToken in $Token | Where-Object { $PSItem.GetType().Name -eq "VariableToken" -and $PSItem.Name -eq "_" })
+            foreach ($automaticVariableAliasToken in $Token | Where-Object { $PSItem.GetType().Name -eq 'VariableToken' -and $PSItem.Name -eq '_' })
             {
-                $correctionTypeName = "Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.CorrectionExtent"
+                $correctionTypeName = 'Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.CorrectionExtent'
                 $correctionExtent = New-Object -TypeName $correctionTypeName -ArgumentList @(
                     $automaticVariableAliasToken.Extent.StartLineNumber
                     $automaticVariableAliasToken.Extent.EndLineNumber
                     $automaticVariableAliasToken.Extent.StartColumnNumber
                     $automaticVariableAliasToken.Extent.EndColumnNumber
                     '$PSItem'
-                    'Replaced the usage of the alias of the automatic variable ''$_'' with its full name ''$PSItem''.'
+                    'Replaced the usage of the alias of the automatic variable "$_" with its full name "$PSItem".'
                 )
 
                 $suggestedCorrections = New-Object System.Collections.ObjectModel.Collection[$correctionTypeName]
                 $suggestedCorrections.add($correctionExtent) | Out-Null
 
                 $results += [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord]@{
-                    "Extent" = $automaticVariableAliasToken.Extent
-                    "Message" = '''$_'' is an alias of the automatic variable ''$PSItem''. Please consider using the full name of this' +
-                    ' variable for consistency.'
-                    "RuleName" = "PSAvoidUsingAutomaticVariableAlias"
-                    "RuleSuppressionID" = "PSAvoidUsingAutomaticVariableAlias"
-                    "Severity" = "Warning"
-                    "SuggestedCorrections" = $suggestedCorrections
+                    'Extent' = $automaticVariableAliasToken.Extent
+                    'Message' = '"$_" is an alias of the automatic variable "$PSItem". Please consider using the full' +
+                    ' name of this variable for consistency.'
+                    'RuleName' = 'PSAvoidUsingAutomaticVariableAlias'
+                    'RuleSuppressionID' = 'PSAvoidUsingAutomaticVariableAlias'
+                    'Severity' = 'Warning'
+                    'SuggestedCorrections' = $suggestedCorrections
                 }
             }
 
