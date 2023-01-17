@@ -96,8 +96,8 @@ if ((Get-InstalledModule PSScriptAnalyzer -ErrorAction SilentlyContinue).Version
     {
         $infoUrl = 'https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/overview?view=ps-modules#installing-psscriptanalyzer'
         Write-FileError ('Unable to detect Invoke-ScriptAnalyzer and failed to install PSScriptAnalyzer. If you are' +
-            'on Windows Powershell, open an administrator shell and type "Install-Module -Name PSScriptAnalyzer' +
-            " -Force -RequiredVersion $installVersion`". Otherwise see $infoUrl to learn more.")
+            ' on Windows Powershell, open an administrator shell and type "Install-Module -Name PSScriptAnalyzer' +
+            " -RequiredVersion $installVersion`". Otherwise see $infoUrl to learn more.")
         exit -2
     }
 }
