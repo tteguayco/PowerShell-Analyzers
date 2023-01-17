@@ -48,8 +48,10 @@ function Measure-AutomaticVariableAlias
 
                 $results += [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord]@{
                     'Extent' = $automaticVariableAliasToken.Extent
-                    'Message' = '"$_" is an alias of the automatic variable "$PSItem". Please consider using the full' +
-                    ' name of this variable for consistency.'
+                    'Message' = @(
+                        '"$_" is an alias of the automatic variable "$PSItem". Please use the full name of this'
+                        'variable for consistency.'
+                    ) -join ' '
                     'RuleName' = 'PSAvoidUsingAutomaticVariableAlias'
                     'RuleSuppressionID' = 'PSAvoidUsingAutomaticVariableAlias'
                     'Severity' = 'Warning'
