@@ -26,6 +26,7 @@ jobs:
         PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
         PSAvoidUsingWriteHost: File 'Violate-Analyzers.ps1' uses Write-Host.
         PSUseConsistentIndentation: Indentation not consistent
+        PSAvoidUsingDoubleQuotesForConstantString: Use single quotes when a string is constant.
 
   call-test-analysis-failure-local:
     name: Test Analysis Failure - Local ProjectReference
@@ -44,3 +45,4 @@ jobs:
         PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
         PSAvoidUsingWriteHost: File 'Violate-Analyzers.ps1' uses Write-Host.
         PSUseConsistentIndentation: Indentation not consistent
+        PSAvoidUsingDoubleQuotesForConstantString: Use single quotes when a string is constant.
