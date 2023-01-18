@@ -76,7 +76,12 @@ Live analysis is outside of the scope of this project, however you can use the V
 
 ### Suppressing PSScriptAnalyzer rules
 
-Occasionally there is good reason to ignore an analyzer warning. In this case add the `[Diagnostics.CodeAnalysis.SuppressMessage('Rule Code', '', Justification = 'Explain reason.')]` attribute to the cmdlet's `param()`. For more information, see the module's [documentation](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/using-scriptanalyzer?view=ps-modules#suppressing-rules).
+Occasionally there is good reason to ignore an analyzer warning. In this case add the `[Diagnostics.CodeAnalysis.SuppressMessage('PSCategoryId', 'ParameterName', Justification = 'Explain why.')]` attribute to the cmdlet's `param()` block. The first two parameters are mandatory:
+
+1. `PSCategoryId` is an example for the Id of the analyzer rule and it usually starts with _PS_.
+2. `ParameterName` is an example for the name of the parameter (notice that it doesn't start with `$`). Leave it empty if the suppression is not specific to a parameter.
+
+For more information, see the module's [documentation](https://docs.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/using-scriptanalyzer?view=ps-modules#suppressing-rules).
 
 Suppressing a specific line or range (like `#pragma warning disable` in C#) is not currently supported. See [the associated PSScriptAnalyzer issue](https://github.com/PowerShell/PSScriptAnalyzer/issues/849).
 

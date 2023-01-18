@@ -1,12 +1,12 @@
-﻿[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+﻿[Diagnostics.CodeAnalysis.SuppressMessage(
     'PSReviewUnusedParameter',
     'ForGitHubActions',
     Justification = 'False positive due to https://github.com/PowerShell/PSScriptAnalyzer/issues/1472.')]
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+[Diagnostics.CodeAnalysis.SuppressMessage(
     'PSReviewUnusedParameter',
     'ForMsBuild',
     Justification = 'False positive due to https://github.com/PowerShell/PSScriptAnalyzer/issues/1472.')]
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+[Diagnostics.CodeAnalysis.SuppressMessage(
     'PSReviewUnusedParameter',
     'IncludeTestSolutions',
     Justification = 'False positive due to https://github.com/PowerShell/PSScriptAnalyzer/issues/1472.')]
