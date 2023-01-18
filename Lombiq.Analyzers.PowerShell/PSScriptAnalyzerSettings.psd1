@@ -46,9 +46,8 @@
             CheckParameter = $false
             IgnoreAssignmentOperatorInsideHashTable = $false
         }
-        # PSUseCorrectCasing is not enabled yet due to https://github.com/PowerShell/PSScriptAnalyzer/issues/1881.
-        # PSUseCorrectCasing = @{
-        #     Enable = $true
-        # }
+        PSUseCorrectCasing = @{
+            Enable = $true
+        }
     }
 }
