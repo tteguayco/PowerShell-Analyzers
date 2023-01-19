@@ -55,7 +55,7 @@ jobs:
     timeout-minutes: ${{ matrix.timeout-minutes }}
     steps:
       - name: Checkout
-        uses: Lombiq/GitHub-Actions/.github/actions/checkout@issue/OSOE-504
+        uses: Lombiq/GitHub-Actions/.github/actions/checkout@dev
         with:
           token: ${{ secrets.CHECKOUT_TOKEN }}
 
@@ -67,6 +67,6 @@ jobs:
 
       - name: Cancel Workflow on Failure
         if: failure() && inputs.cancel-workflow-on-failure == 'true'
-        uses: Lombiq/GitHub-Actions/.github/actions/cancel-workflow@issue/OSOE-504
+        uses: Lombiq/GitHub-Actions/.github/actions/cancel-workflow@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
