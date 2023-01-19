@@ -16,6 +16,7 @@ on:
         default: "true"
         description: >
           If set to "true", static code analysis is ran through Windows PowerShell (version 5.x), but only on Windows.
+          When not "true", machine-types shouldn't have any Windows-based entries, because they won't do anything.
       run-powershell-core:
         required: false
         type: string
