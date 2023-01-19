@@ -60,7 +60,7 @@ jobs:
           token: ${{ secrets.CHECKOUT_TOKEN }}
 
       - name: PowerShell Static Code Analysis
-        uses: Lombiq/GitHub-Actions/.github/actions/powershell-static-code-analysis@issue/OSOE-504
+        uses: Lombiq/GitHub-Actions/.github/actions/static-code-analysis@issue/OSOE-504
         with:
           run-windows-powershell: ${{ inputs.run-windows-powershell }}
           run-powershell-core: ${{ inputs.run-powershell-core }}
