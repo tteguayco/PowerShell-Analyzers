@@ -18,9 +18,11 @@ runs:
     - name: Windows PowerShell (5.x) Static Code Analysis (Windows-only)
       if: runner.os == 'Windows' && inputs.run-windows-powershell == 'true'
       shell: powershell
-      run: ${{github.action_path}}\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
+      run: |
+        & (Resolve-Path '${{github.action_path}}\..\..\..\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1').Path -ForGitHubActions
 
     - name: PowerShell Core (7+) Static Code Analysis
       if: (success() || failure()) && inputs.run-powershell-core == 'true' # Even if the above fails, let's check both.
       shell: pwsh
-      run: ${{github.action_path}}\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
+      run: |
+        & (Resolve-Path '${{github.action_path}}\..\..\..\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1').Path -ForGitHubActions
