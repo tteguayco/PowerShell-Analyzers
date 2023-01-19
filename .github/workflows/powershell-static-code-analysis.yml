@@ -1,6 +1,10 @@
 name: PowerShell Static Code Analysis
 
 on:
+  pull_request:
+  push:
+    branches:
+      - dev
   workflow_dispatch:
     secrets:
       CHECKOUT_TOKEN:
