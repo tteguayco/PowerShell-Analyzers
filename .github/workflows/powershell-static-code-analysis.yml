@@ -55,18 +55,18 @@ jobs:
     timeout-minutes: ${{ matrix.timeout-minutes }}
     steps:
       - name: Checkout
-        uses: Lombiq/GitHub-Actions/.github/actions/checkout@dev
+        uses: Lombiq/GitHub-Actions/.github/actions/checkout@issue/OSOE-504
         with:
           token: ${{ secrets.CHECKOUT_TOKEN }}
 
       - name: PowerShell Static Code Analysis
-        uses: Lombiq/GitHub-Actions/.github/actions/powershell-static-code-analysis@dev
+        uses: Lombiq/GitHub-Actions/.github/actions/powershell-static-code-analysis@issue/OSOE-504
         with:
           run-windows-powershell: ${{ inputs.run-windows-powershell }}
           run-powershell-core: ${{ inputs.run-powershell-core }}
 
       - name: Cancel Workflow on Failure
         if: failure() && inputs.cancel-workflow-on-failure == 'true'
-        uses: Lombiq/GitHub-Actions/.github/actions/cancel-workflow@dev
+        uses: Lombiq/GitHub-Actions/.github/actions/cancel-workflow@issue/OSOE-504
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
