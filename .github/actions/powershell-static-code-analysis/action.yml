@@ -1,0 +1,26 @@
+name: PowerShell Static Code Analysis
+description: Runs static code analysis on PowerShell scripts and cmdlets.
+
+inputs:
+  run-windows-powershell:
+    required: false
+    default: "true"
+    description: >
+      If set to "true", static code analysis is ran through Windows PowerShell (version 5.x), but only on Windows.
+  run-powershell-core:
+    required: false
+    default: "true"
+    description: If set to "true", static code analysis is ran through PowerShell Core (version 7+).
+
+runs:
+  using: "composite"
+  steps:
+    - name: Windows PowerShell (5.x) Static Code Analysis (Windows-only)
+      if: runner.os == 'Windows' && inputs.run-windows-powershell == 'true'
+      shell: powershell
+      run: ${{github.action_path}}\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
+
+    - name: PowerShell Core (7+) Static Code Analysis
+      if: (success() || failure()) && inputs.run-powershell-core == 'true' # Even if the above fails, let's check both.
+      shell: pwsh
+      run: ${{github.action_path}}\Lombiq.Analyzers.PowerShell\Invoke-Analyzer.ps1 -ForGitHubActions
