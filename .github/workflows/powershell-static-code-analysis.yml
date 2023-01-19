@@ -1,7 +1,7 @@
 name: PowerShell Static Code Analysis
 
 on:
-  workflow_call:
+  workflow_dispatch:
     secrets:
       CHECKOUT_TOKEN:
         required: false
@@ -30,11 +30,11 @@ on:
         description: >
           Stringified JSON array with the name of the type of machine(s) to run the workflow under, e.g.
           "['ubuntu-22.04']" or "['ubuntu-22.04', 'windows-2022']".
-      timeout-minutes:
-        required: false
-        type: number
-        default: 10
-        description: Configuration for the timeout-minutes parameter of the workflow. GitHub's default is 360.
+      # timeout-minutes:
+      #   required: false
+      #   type: number
+      #   default: 10
+      #   description: Configuration for the timeout-minutes parameter of the workflow. GitHub's default is 360.
       cancel-workflow-on-failure:
         description: If set to "true", this will cancel the current workflow run with all jobs if this workflow fails.
         required: false
@@ -51,8 +51,8 @@ jobs:
       matrix:
         machine-type: ${{ fromJson(inputs.machine-types) }}
         timeout-minutes:
-          - ${{ inputs.timeout-minutes }}
-    timeout-minutes: ${{ matrix.timeout-minutes }}
+          - 10
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: Lombiq/GitHub-Actions/.github/actions/checkout@issue/OSOE-504
