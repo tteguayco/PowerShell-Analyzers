@@ -1,9 +1,9 @@
 function Violate-Analyzers()
 {
-    "This file is intended to verify that PSScriptAnalyzer works and contains intentionally bad code."
+    Write-Host 'This file contains intentionally bad code to verify that PSScriptAnalyzer works correctly.'
 }
 
 try { Violate-Analyzers } catch { }
 
 "Lombiq", `
-"Orchard", "Hastlayer" | % { $_ }
+'Orchard', 'Hastlayer' | % { $_ }
