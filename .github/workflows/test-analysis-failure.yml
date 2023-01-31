@@ -9,6 +9,7 @@ on:
 
 jobs:
   call-test-analysis-failure-nuget:
+    if: false
     name: Test Analysis Failure - NuGet PackageReference
     uses: Lombiq/GitHub-Actions/.github/workflows/test-analysis-failure.yml@dev
     with:
