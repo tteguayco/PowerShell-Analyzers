@@ -16,12 +16,14 @@ on:
         default: "true"
         description: >
           If set to "true", static code analysis is ran through Windows PowerShell (version 5.x), but only on Windows.
-          When not "true", machine-types shouldn't have any Windows-based entries, because they won't do anything.
       run-powershell-core:
         required: false
         type: string
         default: "true"
-        description: If set to "true", static code analysis is ran through PowerShell Core (version 7+).
+        description: >
+          If set to "true", static code analysis is ran through PowerShell Core (version 7+). When not "true", consider
+          removing Linux-based machine-types from the strategy matrix as they won't run analysis through Windows PowerShell
+          either.
       # This needs to be stringified JSON because inputs don't support arrays, see
       # https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2.
       machine-types:
