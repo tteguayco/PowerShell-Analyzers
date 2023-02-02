@@ -6,7 +6,7 @@ on:
       - v*
 
 jobs:
-  call-publish-workflow:
+  publish-nuget:
     uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@dev
     with:
       # These warnings are related to the tooling erroneously assuming that a ps1 file must be an 
