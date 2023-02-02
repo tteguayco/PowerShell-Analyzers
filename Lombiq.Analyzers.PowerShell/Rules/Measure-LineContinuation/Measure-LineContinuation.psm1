@@ -38,12 +38,14 @@ function Measure-LineContinuation
                     $PSItem.Kind -eq [System.Management.Automation.Language.TokenKind]::LineContinuation })
             {
                 $results += [Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord]@{
-                    "Extent" = $lineContinuationToken.Extent
-                    "Message" = 'Using backtick (line continuation) makes the code harder to read and' +
-                    ' maintain. Please consider using parameter splatting instead.'
-                    "RuleName" = "PSAvoidUsingLineContinuation"
-                    "RuleSuppressionID" = "PSAvoidUsingLineContinuation"
-                    "Severity" = "Warning"
+                    'Extent' = $lineContinuationToken.Extent
+                    'Message' = @(
+                        'Using backtick (line continuation) makes the code harder to read and maintain. Please use'
+                        'parameter splatting instead.'
+                    ) -join ' '
+                    'RuleName' = 'PSAvoidUsingLineContinuation'
+                    'RuleSuppressionID' = 'PSAvoidUsingLineContinuation'
+                    'Severity' = 'Warning'
                 }
             }
 
