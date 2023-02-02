@@ -23,6 +23,9 @@ jobs:
         PSAvoidUsingLineContinuation: Using backtick (line continuation) makes the code harder to read and maintain.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
         PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
+        PSAvoidUsingWriteHost: File 'Violate-Analyzers.ps1' uses Write-Host.
+        PSUseConsistentIndentation: Indentation not consistent
+        PSAvoidUsingDoubleQuotesForConstantString: Use single quotes when a string is constant.
 
   call-test-analysis-failure-local:
     name: Test Analysis Failure - Local ProjectReference
@@ -39,3 +42,6 @@ jobs:
         PSAvoidUsingLineContinuation: Using backtick (line continuation) makes the code harder to read and maintain.
         PSUseApprovedVerbs: The cmdlet 'Violate-Analyzers' uses an unapproved verb.
         PSUseSingularNouns: The cmdlet 'Violate-Analyzers' uses a plural noun.
+        PSAvoidUsingWriteHost: File 'Violate-Analyzers.ps1' uses Write-Host.
+        PSUseConsistentIndentation: Indentation not consistent
+        PSAvoidUsingDoubleQuotesForConstantString: Use single quotes when a string is constant.
