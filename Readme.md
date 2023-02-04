@@ -33,19 +33,40 @@ The `-SettingsPath` can be omitted, in this case the _PSScriptAnalyzerSettings.p
 
 #### GitHub Actions
 
+There are a few different ways to execute PowerShell static code analysis using GitHub Actions:
+
+##### PowerShell Analyzers is a submodule of your repository
+
 You can invoke it from an _action.yml_ file like this:
 
 ```yaml
     - name: Analyze PowerShell scripts
-      shell: pwsh
-      run: ${{ github.action_path }}/Invoke-Analyzer.ps1 -ForGitHubAction
+      shell: powershell # Run analysis from Windows PowerShell.
+      run: <path-to-submodule>/Lombiq.Analyzers.PowerShell/Invoke-Analyzer.ps1 -ForGitHubAction
+    - name: Analyze PowerShell scripts
+      shell: pwsh # Run analysis from PowerShell Core.
+      run: <path-to-submodule>/Lombiq.Analyzers.PowerShell/Invoke-Analyzer.ps1 -ForGitHubAction
 ```
 
-The `-ForGitHubAction` optional displays the results using [error workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message). These create file annotations pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary page. If the violating files aren't in a submodule then they will be marked in the related pull request's Files tab as well.
+The `-ForGitHubAction` switch enables displaying the results using [error workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-error-message). These create file annotations pointing to the exact script path and line number provided by PSScriptAnalyzer. You can review the results in the workflow summary page. If the violating files aren't in a submodule then they will be marked in the related pull request's Files tab as well.
 
-If you are using our `build-dotnet` action or build-related reusable workflows from [Lombiq GitHub Actions](https://github.com/Lombiq/GitHub-Actions), PowerShell linting is already included.
+##### Adding the reusable action to a workflow
 
-Just set the value of the `powershell-analyzer-path` to the path of the _Invoke-Analyzer.ps1_ file relative to your repository root. In case it's _./tools/Lombiq.Analyzers.PowerShell/Invoke-Analyzer.ps1_ you don't need additional configuration.
+See the [action](.github/actions/static-code-analysis/action.yml)'s parameters for configuration options. Example:
+
+```yaml
+    - name: PowerShell Static Code Analysis
+      uses: Lombiq/PowerShell-Analyzers/.github/actions/static-code-analysis@dev
+```
+
+##### Calling the reusable workflow directly
+
+See the [workflow](.github/workflows/static-code-analysis.yml), which is a wrapper for the action above, and its parameters for configuration options. Example:
+
+```yaml
+  powershell-static-code-analysis:
+    uses: Lombiq/PowerShell-Analyzers/.github/workflows/static-code-analysis.yml@dev
+```
 
 #### MSBuild
 
