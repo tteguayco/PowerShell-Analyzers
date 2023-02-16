@@ -116,7 +116,10 @@ $results = Find-Recursively -IncludeFile '*.ps1', '*.psm1', '*.psd1' -ExcludeDir
         $IncludeTestSolutions -or -not (
             $PSItem.Name -eq 'Violate-Analyzers.ps1' -and
             ($PSItem.Directory.Name -eq 'TestSolutions' -or $PSItem.Directory.Parent.Name -eq 'TestSolutions')) } |
-    ForEach-Object { Invoke-ScriptAnalyzer -Path $PSItem.FullName @analyzerParameters }
+    ForEach-Object {
+        Write-Warning "Analysing $($PSItem.FullName)"
+        Invoke-ScriptAnalyzer -Path $PSItem.FullName @analyzerParameters
+    }
 
 foreach ($result in $results)
 {
