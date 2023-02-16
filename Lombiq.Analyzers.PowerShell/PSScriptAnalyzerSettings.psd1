@@ -1,8 +1,8 @@
 @{
     ExcludeRules =
     @(
-        'PSDscExamplesPresent',
-        'PSDscTestsPresent',
+        'PSDscExamplesPresent', #spell-check-ignore-line
+        'PSDscTestsPresent', #spell-check-ignore-line
         'PSReturnCorrectTypesForDSCFunctions',
         'PSProvideCommentHelp',
         # This rule expects us to implement a feature we will be unlikely to use in the majority of cases. Although
