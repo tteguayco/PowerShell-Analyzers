@@ -18,10 +18,10 @@ param(
     [switch] $Fix
 )
 
-# This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $PSItem.FullName -notlike "*\$ExcludeDirectory\*" }
+# This is like Get-ChildItem -Recurse -Include $IncludeFile | ? { $PSItem.FullName -NotLike "*\$ExcludeDirectory\*" }
 # but much faster. For example, this is relevant for ignoring node_modules.
 # - Measure-Command { Find-Recursively -Path . -IncludeFile *.ps1 -ExcludeDirectory node_modules } => 3.83s
-# - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $PSItem.FullName -notlike
+# - Measure-Command { Get-ChildItem -Recurse -Force -Include $IncludeFile | ? { $PSItem.FullName -NotLike
 #   "*\$ExcludeDirectory\*" } } => 111.27s
 function Find-Recursively([string] $Path = '.', [string[]] $IncludeFile, [string] $ExcludeDirectory)
 {
